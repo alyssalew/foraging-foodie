@@ -26,6 +26,65 @@ test_payload = {
     }
 
 
+
+def create_payload(location, radius_mi, limit, price_list, open_now, diet_restrict_list, taste_list, temp_list):
+    """ Given form data make appropiate payload for Yelp API request"""
+
+    ### Processing the form data to get ready for request ###
+
+    yelp_categories = []
+
+    # Add categories for dietary restrictions
+    yelp_categories.extend(diet_restrict_list)
+
+
+    # Getting categories for taste
+    for taste in taste_list:
+        if taste == "spicy":
+            yelp_categories.extend(TASTE_SPICY)
+
+        elif taste == "salty":
+            yelp_categories.extend(TASTE_SALTY)
+
+        elif taste == "sweet":
+            yelp_categories.extend(TASTE_SWEET)
+
+        elif taste == "umami":
+            yelp_categories.extend(TASTE_UMAMI)
+
+        # elif taste == "sour":
+
+
+    # Getting categories for temp
+    for temp in temp_list:
+        if temp == "hot":
+            yelp_categories.extend(TEMP_HOT)
+        elif temp == "cold":
+            yelp_categories.extend(TEMP_COLD)
+
+    yelp_categories = list(set(yelp_categories))
+
+    print "Categories: ", yelp_categories
+
+
+    radius = int(miles_to_meters(radius_mi))
+
+### Request payload ###
+
+    payload = {
+            "location": location,
+            "radius": radius,
+            "limit": limit,
+            "price": price_list,
+            "open_now": open_now,
+            "categories": yelp_categories
+    }
+
+    print "Payload:", payload
+    return payload
+
+
+
 def request_resturants(search_criteria):
     """ Request the Yelp API for restaurants with search criteria"""
 
@@ -48,7 +107,7 @@ def miles_to_meters(number):
 
     """
 
-    num_meters = number * 1609.34
+    num_meters = float(number) * 1609.34
     return num_meters
 
 #########################################################################

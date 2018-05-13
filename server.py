@@ -41,7 +41,7 @@ def search_form_processing():
 
     location = request.form.get('location')
     curr_location = request.form.get('current_location')
-    radius_mi = float(request.form.get('radius'))
+    radius_mi = request.form.get('radius')
     limit = request.form.get('limit')
     price_list = request.form.getlist('price')
     open_now = request.form.get('open_now')
@@ -64,59 +64,6 @@ def search_form_processing():
     # print "temp:", temp_list
 
 
-### Processing the form data to get ready for request ###
-
-    yelp_categories = []
-
-    # Add categories for dietary restrictions
-    yelp_categories.extend(diet_restrict_list)
-
-
-    # Getting categories for taste
-    for taste in taste_list:
-        if taste == "spicy":
-            yelp_categories.extend(yelp_api.TASTE_SPICY)
-
-        elif taste == "salty":
-            yelp_categories.extend(yelp_api.TASTE_SALTY)
-
-        elif taste == "sweet":
-            yelp_categories.extend(yelp_api.TASTE_SWEET)
-
-        elif taste == "umami":
-            yelp_categories.extend(yelp_api.TASTE_UMAMI)
-
-        # elif taste == "sour":
-
-
-    # Getting categories for temp
-    for temp in temp_list:
-        if temp == "hot":
-            yelp_categories.extend(yelp_api.TEMP_HOT)
-        elif temp == "cold":
-            yelp_categories.extend(yelp_api.TEMP_COLD)
-
-    yelp_categories = list(set(yelp_categories))
-
-    print "Categories: ", yelp_categories
-
-
-    radius = int(yelp_api.miles_to_meters(radius_mi))
-
-### Request payload ###
-
-    payload = {
-            "location": location,
-            "radius": radius,
-            "limit": limit,
-            "price": price_list,
-            "open_now": open_now,
-            "categories": yelp_categories
-    }
-
-    print "Payload:", payload
-
-
     # test_json_dict = yelp_api.request_resturants(yelp_api.test_payload)
     # print "You just made a request to the Yelp API!"
 
@@ -124,6 +71,8 @@ def search_form_processing():
 
 
     # The REAL request:
+    payload = yelp_api.create_payload(location, radius_mi, limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
+
     json_dict = yelp_api.request_resturants(payload)
     print "You just made a request to the Yelp API!"
 
