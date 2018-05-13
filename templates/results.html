@@ -1,16 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
 
+    <div>
+    Showing results for ... <br>
+        "location:"{{location}}
+        "current_loc:" {{curr_location}}
+        "radius:" {{radius}}
+        "limit:" {{limit}}
+        "price:" {{price}}
+        "open:" {{open_now}}
+        "diet:" {{diet_restrict}}
+        "taste:" {{taste}}
+        "temp:" {{temp}}
+    </div> <br>
 
-    "location:"{{location}}
-    "current_loc:" {{curr_location}}
-    "radius:" {{radius}}
-    "limit:" {{limit}}
-    "price:" {{price}}
-    "open" {{open_now}}
-    "diet:" {{diet_restrict}}
-    "taste:" {{taste}}
-    "temp:" {{temp}}
+    <!-- <div> 
+        test_response_dict: <br>
+         {# 
+            {{test_response_info}} 
+         #}
+    </div>  -->
+    <div> 
+        response_dict: <br>
+        {{response_info}} 
+    </div>
 
 
 {% endblock %}

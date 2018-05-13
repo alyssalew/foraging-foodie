@@ -5,9 +5,9 @@
 ##### Imports #####
 import os
 
-import requests
-
 from jinja2 import StrictUndefined
+
+import yelp_api  # Import the things needed to use the Yelp API, personal category definitions
 
 from flask import (Flask, render_template, redirect, request, flash, session)
 from flask_debugtoolbar import DebugToolbarExtension
@@ -24,35 +24,6 @@ app.secret_key = os.environ['APP_KEY']
 app.jinja_env.undefined = StrictUndefined
 
 #########################################################################
-##### SETUP FOR YELP API REQUESTS #####
-
-yelp_api_key = os.environ['YELP_API_KEY']
-
-search_url = "https://api.yelp.com/v3/businesses/search"
-headers = {"Authorization": "Bearer {}".format(yelp_api_key)}
-
-
-#########################################################################
-# payload = {}  # Payload that I will build from form response
-
-test_payload = {
-            "location":"san francisco",
-            "limit": 10,
-            "open_now": "true",
-            "categories":["korean", "mexican", "indpak"]
-    }
-
-
-def request_resturants(search_criteria):
-    """ Request the Yelp API for restaurants with search criteria"""
-
-    r = requests.get(search_url, headers=headers, params=test_payload)
-    print (r.url)
-
-    return r.json()
-
-
-#########################################################################
 ##### Routes #####
 
 @app.route('/')
@@ -66,53 +37,110 @@ def index():
 def search_form_processing():
     """ Processing the fields from the search form"""
 
+    print request.form
+
     location = request.form.get('location')
     curr_location = request.form.get('current_location')
-    radius = request.form.get('radius')
+    radius_mi = float(request.form.get('radius'))
     limit = request.form.get('limit')
-    price = request.form.getlist('price')
+    price_list = request.form.getlist('price')
     open_now = request.form.get('open_now')
-    diet_restrict = request.form.getlist('diet_restrict')
-    taste = request.form.getlist('taste')
-    temp = request.form.getlist('temp')
+    diet_restrict_list = request.form.getlist('diet_restrict')
+    taste_list = request.form.getlist('taste')
+    temp_list = request.form.getlist('temp')
+
+
+    print type(radius_mi)
 
 
     # print "location:", location
     # print "current_loc:", curr_location
-    # print "radius:", radius
+    # print "radius:", radius_mi
     # print "limit:", limit
-    # print "price:" , price
+    # print "price:" , price_list
     # print "open", open_now
-    # print "diet:", diet_restrict
-    # print "taste:", taste
-    # print "temp:", temp
+    # print "diet:", diet_restrict_list
+    # print "taste:", taste_list
+    # print "temp:", temp_list
+
+
+### Processing the form data to get ready for request ###
+
+    yelp_categories = []
+
+    # Add categories for dietary restrictions
+    yelp_categories.extend(diet_restrict_list)
+
+
+    # Getting categories for taste
+    for taste in taste_list:
+        if taste == "spicy":
+            yelp_categories.extend(yelp_api.TASTE_SPICY)
+
+        elif taste == "salty":
+            yelp_categories.extend(yelp_api.TASTE_SALTY)
+
+        elif taste == "sweet":
+            yelp_categories.extend(yelp_api.TASTE_SWEET)
+
+        elif taste == "umami":
+            yelp_categories.extend(yelp_api.TASTE_UMAMI)
+
+        # elif taste == "sour":
+
+
+    # Getting categories for temp
+    for temp in temp_list:
+        if temp == "hot":
+            yelp_categories.extend(yelp_api.TEMP_HOT)
+        elif temp == "cold":
+            yelp_categories.extend(yelp_api.TEMP_COLD)
+
+    yelp_categories = list(set(yelp_categories))
+
+    print "Categories: ", yelp_categories
+
+
+    radius = int(yelp_api.miles_to_meters(radius_mi))
+
+### Request payload ###
+
+    payload = {
+            "location": location,
+            "radius": radius,
+            "limit": limit,
+            "price": price_list,
+            "open_now": open_now,
+            "categories": yelp_categories
+    }
+
+    print "Payload:", payload
+
+
+    # test_json_dict = yelp_api.request_resturants(yelp_api.test_payload)
+    # print "You just made a request to the Yelp API!"
+
+    # test_json_dict = yelp_api.test_response_dict  # Pre-requested dict
+
+
+    # The REAL request:
+    json_dict = yelp_api.request_resturants(payload)
+    print "You just made a request to the Yelp API!"
+
 
     return render_template('results.html',
                                 location=location,
                                 curr_location=curr_location,
-                                radius=radius,
+                                radius=radius_mi,
                                 limit=limit,
-                                price= price,
+                                price= price_list,
                                 open_now=open_now,
-                                diet_restrict=diet_restrict,
-                                taste=taste,
-                                temp=temp
+                                diet_restrict=diet_restrict_list,
+                                taste=taste_list,
+                                temp=temp_list,
+                                # test_response_info=test_json_dict
+                                response_info=json_dict
                             )
-
-##########################################################################
-def miles_to_meters(number):
-    """ Convert a number in miles to meters
-
-        >> miles_to_meters(10)
-        16093.4
-
-        >>> miles_to_meters(2)
-        3218.68
-
-    """
-
-    num_meters = number * 1609.34
-    return num_meters
 
 
 #########################################################################
