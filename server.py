@@ -67,14 +67,15 @@ def search_form_processing():
     # test_json_dict = yelp_api.request_resturants(yelp_api.test_payload)
     # print "You just made a request to the Yelp API!"
 
-    # test_json_dict = yelp_api.test_response_dict  # Pre-requested dict
+    test_json_dict = yelp_api.test_response_dict  # Pre-requested dict
 
 
     # The REAL request:
-    payload = yelp_api.create_payload(location, radius_mi, limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
 
-    json_dict = yelp_api.request_resturants(payload)
-    print "You just made a request to the Yelp API!"
+    # payload = yelp_api.create_payload(location, radius_mi, limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
+
+    # json_dict = yelp_api.request_resturants(payload)
+    # print "You just made a request to the Yelp API!"
 
 
     return render_template('results.html',
@@ -87,8 +88,8 @@ def search_form_processing():
                                 diet_restrict=diet_restrict_list,
                                 taste=taste_list,
                                 temp=temp_list,
-                                # test_response_info=test_json_dict
-                                response_info=json_dict
+                                test_response_info=test_json_dict
+                                # response_info=json_dict
                             )
 
 

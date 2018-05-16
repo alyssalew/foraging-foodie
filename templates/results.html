@@ -14,16 +14,34 @@
         "temp:" {{temp}}
     </div> <br>
 
-    <!-- <div> 
-        test_response_dict: <br>
-         {# 
-            {{test_response_info}} 
-         #}
-    </div>  -->
     <div> 
+        <!-- test_response_dict: <br> -->
+        {# {{test_response_info}} <br> #}
+        
+        <!-- {# 
+            1st rest: <br>
+            {{test_response_info.businesses[1].name}}
+        #} -->
+
+        {% for restaurant in test_response_info.businesses %}
+             <a href="{{restaurant.url}}">{{restaurant.name}}</a> <br> <!-- url goes to yelp pg -->
+            Avg Rating: {{restaurant.rating}}
+            Price: {{restaurant.price}}
+             <div><img src="{{restaurant.image_url}}"></div>
+            <br>
+
+
+        {% endfor %}
+
+    </div> 
+
+
+    <!-- For the real stuff -->
+
+    <!-- <div> 
         response_dict: <br>
-        {{response_info}} 
-    </div>
+         {# {{response_info}} #}
+    </div> -->
 
 
 {% endblock %}
