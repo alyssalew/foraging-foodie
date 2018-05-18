@@ -33,11 +33,10 @@ def index():
     return render_template('homepage.html')
 
 
-@app.route('/search-handler', methods=['POST'])
+@app.route('/results', methods=['POST'])
 def search_form_processing():
     """ Processing the fields from the search form"""
 
-    print request.form
 
     location = request.form.get('location')
     curr_location = request.form.get('current_location')
@@ -50,7 +49,7 @@ def search_form_processing():
     temp_list = request.form.getlist('temp')
 
 
-    print type(radius_mi)
+    # print type(radius_mi)
 
 
     # print "location:", location
@@ -67,13 +66,13 @@ def search_form_processing():
     # test_json_dict = yelp_api.request_resturants(yelp_api.test_payload)
     # print "You just made a request to the Yelp API!"
 
-    test_json_dict = yelp_api.test_response_dict  # Pre-requested dict
+    # test_json_dict = yelp_api.test_response_dict  # Pre-requested dict 1
+    test_json_dict = yelp_api.test_response_dict_all
 
 
-    # The REAL request:
+    ### The REAL request: ###
 
     # payload = yelp_api.create_payload(location, radius_mi, limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
-
     # json_dict = yelp_api.request_resturants(payload)
     # print "You just made a request to the Yelp API!"
 
@@ -88,8 +87,8 @@ def search_form_processing():
                                 diet_restrict=diet_restrict_list,
                                 taste=taste_list,
                                 temp=temp_list,
-                                test_response_info=test_json_dict
-                                # response_info=json_dict
+                                test_response_info=test_json_dict # Test repsponse
+                                #response_info=json_dict  # Real response
                             )
 
 

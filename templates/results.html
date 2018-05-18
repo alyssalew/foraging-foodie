@@ -15,33 +15,35 @@
     </div> <br>
 
     <div> 
-        <!-- test_response_dict: <br> -->
-        {# {{test_response_info}} <br> #}
+ <!--        Test_response_dict: <br>
+        {# {{test_response_info}} <br> #} 
         
-        <!-- {# 
+        {# 
             1st rest: <br>
             {{test_response_info.businesses[1].name}}
-        #} -->
-
+        #} 
+-->
+     
         {% for restaurant in test_response_info.businesses %}
-             <a href="{{restaurant.url}}">{{restaurant.name}}</a> <br> <!-- url goes to yelp pg -->
-            Avg Rating: {{restaurant.rating}}
-            Price: {{restaurant.price}}
-             <div><img src="{{restaurant.image_url}}"></div>
-            <br>
-
+            <!-- <a href="{{restaurant.url}}">{{restaurant.name}}</a> <br>  url goes to yelp pg  -->
+            <div id="restaurant_name"> {{restaurant.name}} </div>
+            <div id="restaurant_rating"> Avg Rating: {{restaurant.rating}} </div>
+            <div id="restaurant_price"> Price: {{restaurant.price}} </div>
+            <div id="restaurant_address"> Address: {{restaurant.location.display_address|join(', ')}}
+            <div id="restaurant_phone"> Phone: {{restaurant.display_phone}} </div>
+            <div class="image"><img src="{{restaurant.image_url}}"></div>
 
         {% endfor %}
-
+ 
     </div> 
 
 
     <!-- For the real stuff -->
 
-    <!-- <div> 
+    <!--  <div> 
         response_dict: <br>
-         {# {{response_info}} #}
-    </div> -->
-
+        {# {{response_info}} #}
+    </div>
+ -->
 
 {% endblock %}
