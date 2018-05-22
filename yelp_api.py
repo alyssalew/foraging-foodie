@@ -14,6 +14,8 @@ import os
 yelp_api_key = os.environ['YELP_API_KEY']
 
 search_url = "https://api.yelp.com/v3/businesses/search"
+businesses_details_url = "https://api.yelp.com/v3/businesses/"
+
 headers = {"Authorization": "Bearer {}".format(yelp_api_key)}
 
 
@@ -94,6 +96,14 @@ def request_resturants(search_criteria):
     return r.json()  # Convert r to dictionary
 
 
+def request_resturant_details(biz_id):
+    """ Request the Yelp API for detailed info about a restaurants"""
+
+    r = requests.get(businesses_details_url + biz_id, headers=headers)
+    print (r.url)
+
+    return r.json()  # Convert r to dictionary
+
 ##########################################################################
 ##### HELPER FUNCTIONS #####
 def miles_to_meters(number):
@@ -135,6 +145,6 @@ test_response_dict = {u'region': {u'center': {u'latitude': 37.76089938976322, u'
 test_response_dict_all = {u'region': {u'center': {u'latitude': 37.76089938976322, u'longitude': -122.43644714355469}}, u'total': 1600, u'businesses': [{u'rating': 4.5, u'review_count': 9184, u'name': u'Bi-Rite Creamery', u'transactions': [], u'url': u'https://www.yelp.com/biz/bi-rite-creamery-san-francisco?adjust_creative=9gRH7knlnW1mT4NXafHkcQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=9gRH7knlnW1mT4NXafHkcQ', u'price': u'$', u'distance': 944.5063435745504, u'coordinates': {u'latitude': 37.7615877, u'longitude': -122.4257548}, u'alias': u'bi-rite-creamery-san-francisco', u'image_url': u'https://s3-media2.fl.yelpcdn.com/bphoto/orW7CXAlnSwOFcXZ2kB-lg/o.jpg', u'categories': [{u'alias': u'icecream', u'title': u'Ice Cream & Frozen Yogurt'}, {u'alias': u'bakeries', u'title': u'Bakeries'}], u'display_phone': u'(415) 626-5600', u'phone': u'+14156265600', u'id': u'wGl_DyNxSv8KUtYgiuLhmA', u'is_closed': False, u'location': {u'city': u'San Francisco', u'display_address': [u'3692 18th St', u'San Francisco, CA 94110'], u'country': u'US', u'address2': None, u'address3': u'', u'state': u'CA', u'address1': u'3692 18th St', u'zip_code': u'94110'}}, {u'rating': 4.0, u'review_count': 7134, u'name': u'Tartine Bakery & Cafe', u'transactions': [], u'url': u'https://www.yelp.com/biz/tartine-bakery-and-cafe-san-francisco?adjust_creative=9gRH7knlnW1mT4NXafHkcQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=9gRH7knlnW1mT4NXafHkcQ', u'price': u'$$', u'distance': 1091.249585562033, u'coordinates': {u'latitude': 37.7614250022004, u'longitude': -122.424051321456}, u'alias': u'tartine-bakery-and-cafe-san-francisco', u'image_url': u'https://s3-media1.fl.yelpcdn.com/bphoto/vTLu8G86IqIazm7BRqIH4g/o.jpg', u'categories': [{u'alias': u'bakeries', u'title': u'Bakeries'}, {u'alias': u'cafes', u'title': u'Cafes'}, {u'alias': u'desserts', u'title': u'Desserts'}], u'display_phone': u'(415) 487-2600', u'phone': u'+14154872600', u'id': u'ri7UUYmx21AgSpRsf4-9QA', u'is_closed': False, u'location': {u'city': u'San Francisco', u'display_address': [u'600 Guerrero St', u'San Francisco, CA 94110'], u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'600 Guerrero St', u'zip_code': u'94110'}}, {u'rating': 4.5, u'review_count': 3602, u'name': u"Mitchell's Ice Cream", u'transactions': [], u'url': u'https://www.yelp.com/biz/mitchells-ice-cream-san-francisco?adjust_creative=9gRH7knlnW1mT4NXafHkcQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=9gRH7knlnW1mT4NXafHkcQ', u'price': u'$', u'distance': 2207.086160001414, u'coordinates': {u'latitude': 37.7442315, u'longitude': -122.422816}, u'alias': u'mitchells-ice-cream-san-francisco', u'image_url': u'https://s3-media2.fl.yelpcdn.com/bphoto/ttfrmolywd0rLpcYJmf7Uw/o.jpg', u'categories': [{u'alias': u'icecream', u'title': u'Ice Cream & Frozen Yogurt'}, {u'alias': u'customcakes', u'title': u'Custom Cakes'}], u'display_phone': u'(415) 648-2300', u'phone': u'+14156482300', u'id': u'76smcUUGRvq3k1MVPUXbnA', u'is_closed': False, u'location': {u'city': u'San Francisco', u'display_address': [u'688 San Jose Ave', u'San Francisco, CA 94110'], u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'688 San Jose Ave', u'zip_code': u'94110'}}, {u'rating': 4.0, u'review_count': 4339, u'name': u'El Farolito', u'transactions': [], u'url': u'https://www.yelp.com/biz/el-farolito-san-francisco-2?adjust_creative=9gRH7knlnW1mT4NXafHkcQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=9gRH7knlnW1mT4NXafHkcQ', u'price': u'$', u'distance': 1848.3253463643052, u'coordinates': {u'latitude': 37.75265, u'longitude': -122.41812}, u'alias': u'el-farolito-san-francisco-2', u'image_url': u'https://s3-media1.fl.yelpcdn.com/bphoto/OPnKCvgBR2-lQ1-yahrpiA/o.jpg', u'categories': [{u'alias': u'mexican', u'title': u'Mexican'}, {u'alias': u'seafood', u'title': u'Seafood'}, {u'alias': u'sandwiches', u'title': u'Sandwiches'}], u'display_phone': u'(415) 824-7877', u'phone': u'+14158247877', u'id': u'SGRmnarrNuVEsAjYdEoA0w', u'is_closed': False, u'location': {u'city': u'San Francisco', u'display_address': [u'2779 Mission St', u'San Francisco, CA 94110'], u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'2779 Mission St', u'zip_code': u'94110'}}, {u'rating': 4.5, u'review_count': 1970, u'name': u'B Patisserie', u'transactions': [], u'url': u'https://www.yelp.com/biz/b-patisserie-san-francisco-2?adjust_creative=9gRH7knlnW1mT4NXafHkcQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=9gRH7knlnW1mT4NXafHkcQ', u'price': u'$$', u'distance': 3019.0169808458404, u'coordinates': {u'latitude': 37.78783, u'longitude': -122.44073}, u'alias': u'b-patisserie-san-francisco-2', u'image_url': u'https://s3-media2.fl.yelpcdn.com/bphoto/JSpohxMdt431tYAe2sZhQQ/o.jpg', u'categories': [{u'alias': u'bakeries', u'title': u'Bakeries'}, {u'alias': u'cakeshop', u'title': u'Patisserie/Cake Shop'}, {u'alias': u'macarons', u'title': u'Macarons'}], u'display_phone': u'(415) 440-1700', u'phone': u'+14154401700', u'id': u'2XQm-uFcTS7oc8MFP-8olA', u'is_closed': False, u'location': {u'city': u'San Francisco', u'display_address': [u'2821 California St', u'San Francisco, CA 94115'], u'country': u'US', u'address2': u'', u'address3': u'', u'state': u'CA', u'address1': u'2821 California St', u'zip_code': u'94115'}}]}
 
 
-
+test_biz_id = 'wGl_DyNxSv8KUtYgiuLhmA'  # 'Bi-Rite Creamery
 
 

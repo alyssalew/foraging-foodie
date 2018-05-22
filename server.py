@@ -35,7 +35,7 @@ def index():
 
 @app.route('/results', methods=['POST'])
 def search_form_processing():
-    """ Processing the fields from the search form"""
+    """ Processing the fields from the search form and sends request to Yelp Business Search endpoint"""
 
 
     location = request.form.get('location')
@@ -67,14 +67,14 @@ def search_form_processing():
     # print "You just made a request to the Yelp API!"
 
     # test_json_dict = yelp_api.test_response_dict  # Pre-requested dict 1
-    test_json_dict = yelp_api.test_response_dict_all
+    # test_json_dict = yelp_api.test_response_dict_all
 
 
     ### The REAL request: ###
 
-    # payload = yelp_api.create_payload(location, radius_mi, limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
-    # json_dict = yelp_api.request_resturants(payload)
-    # print "You just made a request to the Yelp API!"
+    payload = yelp_api.create_payload(location, radius_mi, limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
+    json_dict = yelp_api.request_resturants(payload)
+    print "You just made a request to the Yelp API!"
 
 
     return render_template('results.html',
@@ -87,9 +87,20 @@ def search_form_processing():
                                 diet_restrict=diet_restrict_list,
                                 taste=taste_list,
                                 temp=temp_list,
-                                test_response_info=test_json_dict # Test repsponse
-                                #response_info=json_dict  # Real response
+                                # test_response_info=test_json_dict # Test repsponse
+                                response_info=json_dict  # Real response
                             )
+
+
+@app.route("/more-info.json")
+def get_more_info():
+    """ Sends a request to the Yelp Business Details endpoint"""
+
+    yelp_biz_id = request.args.get("biz_id")
+
+    # json_dict = yelp_api.request_resturant_details(yelp_biz_id)
+    print "You just requested more info about a resturant from the Yelp API!"
+    return yelp_biz_id  # JSON of more info
 
 
 #########################################################################
