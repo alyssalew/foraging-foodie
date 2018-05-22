@@ -87,7 +87,7 @@ def create_payload(location, radius_mi, limit, price_list, open_now, diet_restri
 
 
 
-def request_resturants(search_criteria):
+def request_restaurants(search_criteria):
     """ Request the Yelp API for restaurants with search criteria"""
 
     r = requests.get(search_url, headers=headers, params=search_criteria)  # r is type JSON
@@ -96,7 +96,7 @@ def request_resturants(search_criteria):
     return r.json()  # Convert r to dictionary
 
 
-def request_resturant_details(biz_id):
+def request_restaurant_details(biz_id):
     """ Request the Yelp API for detailed info about a restaurants"""
 
     r = requests.get(businesses_details_url + biz_id, headers=headers)
