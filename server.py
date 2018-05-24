@@ -75,6 +75,7 @@ def search_form_processing():
     payload = yelp_api.create_payload(location, radius_mi, limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
     json_dict = yelp_api.request_restaurants(payload)
     print "You just made a request to the Yelp API!"
+    print json_dict
 
 
     return render_template('results.html',

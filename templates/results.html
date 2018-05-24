@@ -15,7 +15,6 @@
     </div> <br>
 
     <div> 
-    <!--  To use test data use test_response_info.business -->
         {% for restaurant in response_info.businesses %}
             <!-- <a href="{{restaurant.url}}">{{restaurant.name}}</a> <br>  url goes to yelp pg  -->
             <div id="restaurant_name"> {{restaurant.name}} 
@@ -31,13 +30,5 @@
  
     </div> 
 
-
-    <!-- For the real stuff -->
-
-    <!--  <div> 
-        response_dict: <br>
-        {# {{response_info}} #}
-    </div>
- -->
 
 {% endblock %}
