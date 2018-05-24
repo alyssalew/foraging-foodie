@@ -41,7 +41,7 @@ def search_form_processing():
     location = request.form.get('location')
     curr_location = request.form.get('current_location')
     radius_mi = request.form.get('radius')
-    limit = request.form.get('limit')
+    user_limit = request.form.get('limit')
     price_list = request.form.getlist('price')
     open_now = request.form.get('open_now')
     diet_restrict_list = request.form.getlist('diet_restrict')
@@ -72,17 +72,22 @@ def search_form_processing():
 
     ### The REAL request: ###
 
-    payload = yelp_api.create_payload(location, radius_mi, limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
+    payload = yelp_api.create_payload(location, radius_mi, user_limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
     json_dict = yelp_api.request_restaurants(payload)
+
     print "You just made a request to the Yelp API!"
     print json_dict
+
+    # Call new function(s) here to filter results
+
+    (json_dict.businesses)
 
 
     return render_template('results.html',
                                 location=location,
                                 curr_location=curr_location,
                                 radius=radius_mi,
-                                limit=limit,
+                                user_limit=user_limit,
                                 price= price_list,
                                 open_now=open_now,
                                 diet_restrict=diet_restrict_list,
