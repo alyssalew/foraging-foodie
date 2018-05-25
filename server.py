@@ -80,7 +80,7 @@ def search_form_processing():
 
     # Call new function(s) here to filter results
 
-    (json_dict.businesses)
+    # (json_dict.businesses)
 
 
     return render_template('results.html',
