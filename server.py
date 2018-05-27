@@ -68,19 +68,24 @@ def search_form_processing():
 
     # test_json_dict = yelp_api.test_response_dict  # Pre-requested dict 1
     # test_json_dict = yelp_api.test_response_dict_all
+    test_json_dict = yelp_api.test_response_dict_vegan_spicy
 
 
     ### The REAL request: ###
 
-    payload = yelp_api.create_payload(location, radius_mi, user_limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
-    json_dict = yelp_api.request_restaurants(payload)
+    # payload = yelp_api.create_payload(location, radius_mi, user_limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
+    # json_dict = yelp_api.request_restaurants(payload)
 
-    print "You just made a request to the Yelp API!"
-    print json_dict
+    # print "You just made a request to the Yelp API!"
+    # print json_dict
 
-    # Call new function(s) here to filter results
 
-    # (json_dict.businesses)
+    ## Call new function(s) here to filter results ##
+
+    test_filtered = yelp_api.filter_restaurants(test_json_dict['businesses'], diet_restrict_list, taste_list, temp_list)
+
+    if user_limit:
+        test_filtered = yelp_api.shorten_restaurant_list(test_filtered, int(user_limit))
 
 
     return render_template('results.html',
@@ -94,7 +99,8 @@ def search_form_processing():
                                 taste=taste_list,
                                 temp=temp_list,
                                 # test_response_info=test_json_dict # Test repsponse
-                                response_info=json_dict  # Real response
+                                test_filtered_list=test_filtered
+                                # response_info=json_dict  # Real response
                             )
 
 

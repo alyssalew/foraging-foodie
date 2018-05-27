@@ -130,17 +130,20 @@ def meets_dietary_restriction(restaurant, restriction):
 def meets_all_diets(restaurant, diet_restrict_list):
     """ Determines if a restaurant meets ALL the diet restrictions """
 
-    count = 0
-    for diet in diet_restrict_list:
-        print diet
-        if meets_dietary_restriction(restaurant, diet) is True:
-            count = count + 1
-            print count
-
-    if count == len(diet_restrict_list):
+    if len (diet_restrict_list) == 0:
         return True
     else:
-        return False
+        count = 0
+        for diet in diet_restrict_list:
+            print diet
+            if meets_dietary_restriction(restaurant, diet) is True:
+                count = count + 1
+                print count
+
+        if count == len(diet_restrict_list):
+            return True
+        else:
+            return False
 
 
 
@@ -158,6 +161,7 @@ def is_taste(restaurant, taste_def):
                 return True
             else:
                 continue
+    return False
 
 
 ## Filters for Temperature ##
@@ -172,34 +176,67 @@ def is_temp(restaurant, temp_def):
                 return True
             else:
                 continue
+    return False
 
 
-def taste_temp_checker(restaurant, lst, list_type): # << Is there a way to do this by matching the list varibale name? ie: if pass in taste_list as lst
-    """ See what tastes or temperatures user wanted """
+def taste_temp_checker(restaurant, lst, list_type):  # << Is there a way to do this by matching the list varibale name? ie: if pass in taste_list as lst
+    """ Check if restaurant matches the tastes or temperatures user wanted """
 
-    for item in lst:
-        print item
-        if list_type == "taste":
-            if item == "spicy":
-                return is_taste(restaurant, TASTE_SPICY)
-
-
-        elif list_type == "temperature":
-            is_temp(restaurant, item)
+    if len(lst) == 0:
+        return True
+    else:
+        for item in lst:
+            print item
+            if list_type == "taste":
+                if item == "spicy":
+                    t = is_taste(restaurant, TASTE_SPICY)
+                    if t is True:
+                        return t
+                elif item == "salty":
+                    t = is_taste(restaurant, TASTE_SALTY)
+                    if t is True:
+                        return t
+                elif item == "sweet":
+                    t = is_taste(restaurant, TASTE_SWEET)
+                    if t is True:
+                        return t
+                elif item == "umami":
+                    t = is_taste(restaurant, TASTE_UMAMI)
+                    if t is True:
+                        return t
+            elif list_type == "temperature":
+                if item == "hot":
+                    t = is_temp(restaurant, TEMP_HOT)
+                    if t is True:
+                        return t
+                elif item == "cold":
+                    t = is_temp(restaurant, TEMP_COLD)
+                    if t is True:
+                        return t
+        return False
 
 
 def filter_restaurants(restaurants_request_list, diet_restrict_list, taste_list, temp_list):
     """ Filters results for intersection of user-selected categories. Returns filtered dictionary """
 
     filtered_restaurants = []
+    restaurant_counter = 0
 
     for restaurant in restaurants_request_list:
         # Check true, true , true
-
-        if (meets_dietary_restriction(restaurant, diet_restrict_list) is True) and (taste_temp_checker(restaurant, taste_list) is True) and (taste_temp_checker(restaurant, temp_list) is True):
+        restaurant_counter = restaurant_counter + 1
+        print "Restaurant Count:", restaurant_counter
+        if (meets_all_diets(restaurant, diet_restrict_list) is True) and (taste_temp_checker(restaurant, taste_list, "taste") is True) and (taste_temp_checker(restaurant, temp_list, "temperature") is True):
             filtered_restaurants.append(restaurant)
 
+    print filtered_restaurants
     return filtered_restaurants
+
+
+def shorten_restaurant_list(restaurant_list, user_limit):
+    """ Cuts off filtered restaurants at the number the user wanted """
+    short_list = restaurant_list[0:(user_limit)]
+    return short_list
 
 
 ##########################################################################

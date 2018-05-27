@@ -15,7 +15,8 @@
     </div> <br>
 
     <div> 
-        {% for restaurant in response_info.businesses %}
+        {% for restaurant in test_filtered_list %}
+        <!-- {# {% for restaurant in response_info.businesses %} #} -->
             <!-- <a href="{{restaurant.url}}">{{restaurant.name}}</a> <br>  url goes to yelp pg  -->
             <div id="restaurant_name"> {{restaurant.name}} 
                 <button type="button" class="btn btn-info" id = "my_button" value="{{restaurant.id}}"> More Info {{restaurant.id}} </button>
