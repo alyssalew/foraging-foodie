@@ -67,7 +67,7 @@ def create_payload(location, radius_mi, limit, price_list, open_now, diet_restri
     yelp_categories = list(set(yelp_categories))
 
     print "Categories: ", yelp_categories
-
+    
 
     radius = int(miles_to_meters(radius_mi))
 

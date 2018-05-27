@@ -39,7 +39,7 @@ def search_form_processing():
 
 
     location = request.form.get('location')
-    curr_location = request.form.get('current_location')
+    # curr_location = request.form.get('current_location')
     radius_mi = request.form.get('radius')
     user_limit = request.form.get('limit')
     price_list = request.form.getlist('price')
@@ -68,39 +68,40 @@ def search_form_processing():
 
     # test_json_dict = yelp_api.test_response_dict  # Pre-requested dict 1
     # test_json_dict = yelp_api.test_response_dict_all
-    test_json_dict = yelp_api.test_response_dict_vegan_spicy
+    # test_json_dict = yelp_api.test_response_dict_vegan_spicy
 
 
     ### The REAL request: ###
 
-    # payload = yelp_api.create_payload(location, radius_mi, user_limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
-    # json_dict = yelp_api.request_restaurants(payload)
+    payload = yelp_api.create_payload(location, radius_mi, user_limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
+    json_dict = yelp_api.request_restaurants(payload)
 
-    # print "You just made a request to the Yelp API!"
-    # print json_dict
+    print "You just made a request to the Yelp API!"
+    print json_dict
 
 
     ## Call new function(s) here to filter results ##
 
-    test_filtered = yelp_api.filter_restaurants(test_json_dict['businesses'], diet_restrict_list, taste_list, temp_list)
+    filtered_results = yelp_api.filter_restaurants(json_dict['businesses'], diet_restrict_list, taste_list, temp_list)
 
     if user_limit:
-        test_filtered = yelp_api.shorten_restaurant_list(test_filtered, int(user_limit))
+        filtered_results = yelp_api.shorten_restaurant_list(filtered_results, int(user_limit))
 
 
     return render_template('results.html',
                                 location=location,
-                                curr_location=curr_location,
+                                # curr_location=curr_location,
                                 radius=radius_mi,
                                 user_limit=user_limit,
-                                price= price_list,
+                                price=price_list,
                                 open_now=open_now,
                                 diet_restrict=diet_restrict_list,
                                 taste=taste_list,
                                 temp=temp_list,
                                 # test_response_info=test_json_dict # Test repsponse
-                                test_filtered_list=test_filtered
+                                # test_filtered_list=test_filtered_results
                                 # response_info=json_dict  # Real response
+                                filtered_list=filtered_results
                             )
 
 

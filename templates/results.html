@@ -3,19 +3,63 @@
 
     <div>
     Showing results for ... <br>
-        "location:"{{location}}
-        "current_loc:" {{curr_location}}
-        "radius:" {{radius}}
-        "user-limit:" {{user_limit}}
-        "price:" {{price}}
-        "open:" {{open_now}}
-        "diet:" {{diet_restrict}}
-        "taste:" {{taste}}
-        "temp:" {{temp}}
+        <div> 
+            <li> Resturants located within {{radius}} miles of {{location}}
+        </div>
+        <div>
+            {% if user_limit %}
+                <li> Limited to {{user_limit}} results
+            {% endif %}
+        </div>
+        <div>
+            {% if price %}
+                <li> Prices:
+                {% for p in price %}
+                    {{p}}
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            {% if open_now %}
+                 <li> Open Now
+            {% endif %}
+        </div>
+        <div>
+            {% if diet_restrict %}
+                <li> Dietary Restirctions:
+                {% for d in diet_restrict %}
+                    {{d}} 
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            {% if taste %}
+                <li> Tastes:
+                {% for t in taste %}
+                    {{t}} 
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div>
+            {% if temp %}
+                <li> Temperatures:
+                {% for t in temp %}
+                    {{t}} 
+                {% endfor %}
+            {% endif %}
+        </div>
+
     </div> <br>
 
     <div> 
-        {% for restaurant in test_filtered_list %}
+        <div id="no_results"> 
+            {% if not filtered_list %}
+                Sorry no restaurants match your criteria :( <br>
+                Please try to search again!
+            {% endif %}
+        </div>
+
+        {% for restaurant in filtered_list %}
         <!-- {# {% for restaurant in response_info.businesses %} #} -->
             <!-- <a href="{{restaurant.url}}">{{restaurant.name}}</a> <br>  url goes to yelp pg  -->
             <div id="restaurant_name"> {{restaurant.name}} 
