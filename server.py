@@ -77,7 +77,7 @@ def search_form_processing():
     json_dict = yelp_api.request_restaurants(payload)
 
     print "You just made a request to the Yelp API!"
-    print json_dict
+    # print json_dict
 
 
     ## Call new function(s) here to filter results ##

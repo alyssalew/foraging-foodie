@@ -67,7 +67,7 @@ def create_payload(location, radius_mi, limit, price_list, open_now, diet_restri
     yelp_categories = list(set(yelp_categories))
 
     print "Categories: ", yelp_categories
-    
+
 
     radius = int(miles_to_meters(radius_mi))
 
@@ -117,6 +117,10 @@ def request_restaurants(search_criteria):
 def meets_dietary_restriction(restaurant, restriction):
     """ Determines if restaurant matches the criteria for a dietary restriction
         (vegan, halal, vegetarian, kosher, gluten_free)
+
+        eg.
+        meets_all_diets(restaurant_object, 'vegan')
+
     """
 
     for label in restaurant['categories']:
@@ -128,7 +132,12 @@ def meets_dietary_restriction(restaurant, restriction):
 
 
 def meets_all_diets(restaurant, diet_restrict_list):
-    """ Determines if a restaurant meets ALL the diet restrictions """
+    """ Determines if a restaurant meets ALL the diet restrictions
+
+        eg.
+        meets_all_diets(restaurant_object, ['vegan', 'gluten_free'])
+
+    """
 
     if len (diet_restrict_list) == 0:
         return True
@@ -151,6 +160,10 @@ def meets_all_diets(restaurant, diet_restrict_list):
 def is_taste(restaurant, taste_def):
     """ Determines if restaurant matches the criteria for taste
         (spicy, salty, sweet, umami)
+
+        eg.
+        is_taste(restaurant_object, TASTE_SWEET)
+
     """
 
     for label in restaurant['categories']:
@@ -166,7 +179,12 @@ def is_taste(restaurant, taste_def):
 
 ## Filters for Temperature ##
 def is_temp(restaurant, temp_def):
-    """ Determines if restaurant matches the criteria for temperature (hot, cold) """
+    """ Determines if restaurant matches the criteria for temperature (hot, cold)
+
+        eg.
+        is_temp(restaurant_object, TEMP_COLD)
+
+    """
 
     for label in restaurant['categories']:
         print "hi"
@@ -180,7 +198,16 @@ def is_temp(restaurant, temp_def):
 
 
 def taste_temp_checker(restaurant, lst, list_type):  # << Is there a way to do this by matching the list varibale name? ie: if pass in taste_list as lst
-    """ Check if restaurant matches the tastes or temperatures user wanted """
+    """ Check if restaurant matches the tastes or temperatures user wanted
+
+
+        eg.
+        taste_temp_checker(restaurant_object, ['spicy', 'salty'], 'taste')
+
+        taste_temp_checker(restaurant_object, ['cold'], 'temperature')
+
+
+    """
 
     if len(lst) == 0:
         return True
@@ -229,7 +256,7 @@ def filter_restaurants(restaurants_request_list, diet_restrict_list, taste_list,
         if (meets_all_diets(restaurant, diet_restrict_list) is True) and (taste_temp_checker(restaurant, taste_list, "taste") is True) and (taste_temp_checker(restaurant, temp_list, "temperature") is True):
             filtered_restaurants.append(restaurant)
 
-    print filtered_restaurants
+    # print filtered_restaurants
     return filtered_restaurants
 
 
