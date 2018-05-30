@@ -119,12 +119,12 @@ def meets_dietary_restriction(restaurant, restriction):
         (vegan, halal, vegetarian, kosher, gluten_free)
 
         eg.
-        meets_all_diets(restaurant_object, 'vegan')
+        meets_dietary_restriction(restaurant_object, 'vegan')
 
     """
 
     for label in restaurant['categories']:
-        print "check label"
+        # print "check label"
         if label['alias'] == restriction:
             return True
         else:
@@ -139,57 +139,33 @@ def meets_all_diets(restaurant, diet_restrict_list):
 
     """
 
-    if len (diet_restrict_list) == 0:
-        return True
-    else:
-        count = 0
-        for diet in diet_restrict_list:
-            print diet
-            if meets_dietary_restriction(restaurant, diet) is True:
-                count = count + 1
-                print count
+    count = 0
+    for diet in diet_restrict_list:
+        # print diet
+        if meets_dietary_restriction(restaurant, diet):
+            count = count + 1
+            # print count
 
-        if count == len(diet_restrict_list):
-            return True
-        else:
-            return False
+    return count == len(diet_restrict_list)
 
 
 
-## Filters for Taste ##
-def is_taste(restaurant, taste_def):
+## Filters for Taste and Temperature
+def meets_definition(restaurant, definition):
     """ Determines if restaurant matches the criteria for taste
-        (spicy, salty, sweet, umami)
+        (spicy, salty, sweet, umami) or criteria for temperature (cold, hot)
 
         eg.
         is_taste(restaurant_object, TASTE_SWEET)
 
-    """
-
-    for label in restaurant['categories']:
-        print "hi"
-        for item in taste_def:
-            print item
-            if label['alias'] == item:
-                return True
-            else:
-                continue
-    return False
-
-
-## Filters for Temperature ##
-def is_temp(restaurant, temp_def):
-    """ Determines if restaurant matches the criteria for temperature (hot, cold)
-
-        eg.
         is_temp(restaurant_object, TEMP_COLD)
 
     """
 
     for label in restaurant['categories']:
-        print "hi"
-        for item in temp_def:
-            print item
+        # print "New label:"
+        for item in definition:
+            # print item
             if label['alias'] == item:
                 return True
             else:
@@ -197,49 +173,39 @@ def is_temp(restaurant, temp_def):
     return False
 
 
-def taste_temp_checker(restaurant, lst, list_type):  # << Is there a way to do this by matching the list varibale name? ie: if pass in taste_list as lst
+
+def taste_temp_checker(restaurant, lst):
     """ Check if restaurant matches the tastes or temperatures user wanted
 
-
         eg.
-        taste_temp_checker(restaurant_object, ['spicy', 'salty'], 'taste')
+        taste_temp_checker(restaurant_object, ['spicy', 'salty'])
 
-        taste_temp_checker(restaurant_object, ['cold'], 'temperature')
+        taste_temp_checker(restaurant_object, ['cold'])
 
 
     """
 
-    if len(lst) == 0:
+    if len(lst) == 0:  # Explictly define 'True' otherwise filtering with no taste or temp catagories selected will give no results
         return True
     else:
         for item in lst:
-            print item
-            if list_type == "taste":
-                if item == "spicy":
-                    t = is_taste(restaurant, TASTE_SPICY)
-                    if t is True:
-                        return t
-                elif item == "salty":
-                    t = is_taste(restaurant, TASTE_SALTY)
-                    if t is True:
-                        return t
-                elif item == "sweet":
-                    t = is_taste(restaurant, TASTE_SWEET)
-                    if t is True:
-                        return t
-                elif item == "umami":
-                    t = is_taste(restaurant, TASTE_UMAMI)
-                    if t is True:
-                        return t
-            elif list_type == "temperature":
-                if item == "hot":
-                    t = is_temp(restaurant, TEMP_HOT)
-                    if t is True:
-                        return t
-                elif item == "cold":
-                    t = is_temp(restaurant, TEMP_COLD)
-                    if t is True:
-                        return t
+            # print item
+            if item == "spicy":
+                t = meets_definition(restaurant, TASTE_SPICY)
+            elif item == "salty":
+                t = meets_definition(restaurant, TASTE_SALTY)
+            elif item == "sweet":
+                t = meets_definition(restaurant, TASTE_SWEET)
+            elif item == "umami":
+                t = meets_definition(restaurant, TASTE_UMAMI)
+            elif item == "hot":
+                t = meets_definition(restaurant, TEMP_HOT)
+            elif item == "cold":
+                t = meets_definition(restaurant, TEMP_COLD)
+
+        if t:  # Will return 'True' if it finds a matching restaurant
+            # print t
+            return t
         return False
 
 
@@ -250,10 +216,10 @@ def filter_restaurants(restaurants_request_list, diet_restrict_list, taste_list,
     restaurant_counter = 0
 
     for restaurant in restaurants_request_list:
-        # Check true, true , true
+        # Check true, true, true
         restaurant_counter = restaurant_counter + 1
-        print "Restaurant Count:", restaurant_counter
-        if (meets_all_diets(restaurant, diet_restrict_list) is True) and (taste_temp_checker(restaurant, taste_list, "taste") is True) and (taste_temp_checker(restaurant, temp_list, "temperature") is True):
+        # print "Restaurant Count:", restaurant_counter
+        if meets_all_diets(restaurant, diet_restrict_list) and taste_temp_checker(restaurant, taste_list) and taste_temp_checker(restaurant, temp_list):
             filtered_restaurants.append(restaurant)
 
     # print filtered_restaurants

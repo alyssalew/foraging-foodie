@@ -26,7 +26,7 @@
         </div>
         <div>
             {% if diet_restrict %}
-                <li> Dietary Restirctions:
+                <li> Dietary Restrictions:
                 {% for d in diet_restrict %}
                     {{d}} 
                 {% endfor %}
@@ -64,7 +64,7 @@
             <!-- <a href="{{restaurant.url}}">{{restaurant.name}}</a> <br>  url goes to yelp pg  -->
             <div>
                 <div id="restaurant_name"> {{restaurant.name}} 
-                    <button type="button" class="btn btn-info" id = "my_button" value="{{restaurant.id}}"> More Info {{restaurant.id}} </button>
+                    <!-- <button type="button" class="btn btn-info" id = "my_button" value="{{restaurant.id}}"> More Info {{restaurant.id}} </button> -->
                 </div>
                 <div id="restaurant_rating"> Avg Rating: {{restaurant.rating}} </div>
                 <div id="restaurant_price"> Price: {{restaurant.price}} </div>
