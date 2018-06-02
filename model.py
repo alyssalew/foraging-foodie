@@ -20,11 +20,11 @@ class User(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
-    email = db.Column(db.String(40), nullable=False)
+    email = db.Column(db.String(40), nullable=False, unique=True)
     password = db.Column(db.String(20), nullable=False)
 
    # Define a relationship
-    profile = db.relationship("Profile", use_list=False, backref=db.backref("users"))
+    profile = db.relationship("Profile", uselist=False, backref=db.backref("users"))
     diet = db.relationship("Diet", secondary="users_diets", backref=db.backref("users"))
     address = db.relationship("Address", backref=db.backref("users"))
     favorite = db.relationship("Favorite", backref=db.backref("users"))
@@ -72,7 +72,7 @@ class Profile(db.Model):
 
     user_type_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    type_name = db.Column(db.String(40), nullable=False)
+    type_name = db.Column(db.String(40), nullable=False, unique=True)
     type_define = db.Column(db.String(100), nullable=False)
 
 
@@ -91,7 +91,7 @@ class Diet(db.Model):
     __tablename__ = "diets"
 
     diet_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    diet_name = db.Column(db.String(20), nullable=False)
+    diet_name = db.Column(db.String(20), nullable=False, unique=True)
 
 
     def __repr__(self):
@@ -128,7 +128,7 @@ class Favorite(db.Model):
     favorite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.restaurant_id'), nullable=False)
-    favorite = db.Column(db.Boolean, nullable=False)
+    favorite = db.Column(db.Boolean, nullable=False, default=False)
 
 
     def __repr__(self):
@@ -198,7 +198,7 @@ class Restaurant(db.Model):
 
     restaurant_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     yelp_biz_id = db.Column(db.String(30), nullable=False)
-    name = db.Column(String(50), nullable=True)
+    name = db.Column(db.String(50), nullable=True)
 
 
     def __repr__(self):
