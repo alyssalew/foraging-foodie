@@ -13,7 +13,7 @@ db = SQLAlchemy()
 # Model definitions
 
 class User(db.Model):
-    """Users of Foraging Foodie website. """
+    """ Users of Foraging Foodie website. """
 
     __tablename__ = "users"
 
@@ -22,39 +22,46 @@ class User(db.Model):
     last_name = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(40), nullable=False)
     password = db.Column(db.String(20), nullable=False)
-    user_type_id = db.Column(db.Integer, nullable=True)  # Will be a foreign key to Profiles table later
-    diet = db.Column(db.Integer, nullable=True)  # Might have foreign key to association table
+
+   # Define a relationship
+    profile = db.relationship("Profile", use_list=False, backref=db.backref("users"))
+    diet = db.relationship("Diet", secondary="users_diets", backref=db.backref("users"))
+    address = db.relationship("Address", backref=db.backref("users"))
+    favorite = db.relationship("Favorite", backref=db.backref("users"))
+
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<User user_id={} first_name={} last_name={} email={}>".format(self.user_id,
-                                                                        self.first_name, self.last_name, self.email)
+        return "<User user_id={} first_name={} last_name={} email={}>".format(
+                                                                        self.user_id,
+                                                                        self.first_name,
+                                                                        self.last_name,
+                                                                        self.email
+                                                                        )
 
-  
+
+
 class Address(db.Model):
     """ User addresses for Foraging Foodie website. """
 
     __tablename__ = 'addresses'
 
     address_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     address_label = db.Column(db.String(20), nullable=False)
     address = db.Column(db.String(200), nullable=False)
-
-    # Define a relationship
-    user = db.relationship("User", backref=db.backref("addresses"))
 
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Address address_id={} user_id={} address_label={} address={} >".format(self.address_id, self.user_id,
-                                                                self.address_label, self.address)
-
-
-
-
+        return "<Address address_id={} user_id={} address_label={} address={} >".format(
+                                                                                self.address_id,
+                                                                                self.user_id,
+                                                                                self.address_label,
+                                                                                self.address
+                                                                                )
 
 
 
@@ -64,15 +71,143 @@ class Profile(db.Model):
     __tablename__ = "profiles"
 
     user_type_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    profile_name = db.Column(db.String(40), nullable=False)
-    profiles_define = db.Column(db.String(40), nullable=False)
-    # Need to finish this one
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    type_name = db.Column(db.String(40), nullable=False)
+    type_define = db.Column(db.String(100), nullable=False)
 
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Profile user_type={}".format(self.user_type)
+        return "<Profile user_type_id={} profile_name={}".format(self.user_type_id,
+                                                            self.profile_define
+                                                            )
+
+
+
+class Diet(db.Model):
+    """ Diets of Foraging Foodie website. """
+
+    __tablename__ = "diets"
+
+    diet_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    diet_name = db.Column(db.String(20), nullable=False)
+
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Diet diet_id={} diet_name={}".format(self.diet_id, self.diet_name)
+
+
+
+class UserDiet(db.Model):
+    """ Association table connecting Users to Diets. """
+
+    __tablename__ = "users_diets"
+
+    user_diet_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    diet_id = db.Column(db.Integer, db.ForeignKey('diets.diet_id'), nullable=False)
+
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<UserDiet user_diet_id={} user_id={} diet_id={}".format(self.user_diet_id,
+                                                                    self.user_id, self.diet_id
+                                                                    )
+
+
+
+class Favorite(db.Model):
+    """ User favorites of Foraging Foodie website. """
+
+    __tablename__ = "favorites"
+
+    favorite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.restaurant_id'), nullable=False)
+    favorite = db.Column(db.Boolean, nullable=False)
+
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Favorite favorite_id={} user_id={} restaurant_id={} favorite={}".format(
+                                                                                self.favorite_id,
+                                                                                self.user_id,
+                                                                                self.restaurant_id,
+                                                                                self.favorite
+                                                                                )
+
+
+
+class Visit(db.Model):
+    """ Visits for Foraging Foodie website. """
+
+    __tablename__ = 'visits'
+
+    visit_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    rating_id = db.Column(db.Integer, db.ForeignKey('ratings.rating_id'), nullable=False)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.restaurant_id'), nullable=False)
+    visit_date = db.Column(db.Date, nullable=True)
+
+
+    # Define a relationship
+    user = db.relationship("User", backref=db.backref("visits"))
+    rating = db.relationship("Rating", backref=db.backref("visits"))
+    restaurant = db.relationship("Restaurant", backref=db.backref("visits"))
+
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Visit visit_id={} user_id={} restaurant_id={} visit_date={}>".format(
+                                                                                self.visit_id,
+                                                                                self.user_id,
+                                                                                self.restaurant_id,
+                                                                                self.visit_date
+                                                                                )
+
+
+
+class Rating(db.Model):
+    """ Ratings for Foraging Foodie website. """
+
+    __tablename__ = 'ratings'
+
+    rating_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    score = db.Column(db.Integer, nullable=False)
+
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Rating rating_id={} visit_id={} rating={}>".format(self.rating_id,
+                                                            self.visit_id, self.score
+                                                            )
+
+
+
+class Restaurant(db.Model):
+    """ Restaurants for Foraging Foodie website. """
+
+    __tablename__ = 'restaurants'
+
+    restaurant_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    yelp_biz_id = db.Column(db.String(30), nullable=False)
+    name = db.Column(String(50), nullable=True)
+
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Restaurant restaurant_id={} yelp_biz_id={} name={}>".format(self.restaurant_id,
+                                                                    self.yelp_biz_id, self.name
+                                                                    )
+
 
 
 ##############################################################################
