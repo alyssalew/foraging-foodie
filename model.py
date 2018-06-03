@@ -1,6 +1,7 @@
 """Models and database functions for Foraging Foodie project."""
 
 from flask_sqlalchemy import SQLAlchemy
+from datetime import date
 
 # This is the connection to the PostgreSQL database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
@@ -22,12 +23,13 @@ class User(db.Model):
     last_name = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(40), nullable=False, unique=True)
     password = db.Column(db.String(20), nullable=False)
+    user_type_id = db.Column(db.Integer, db.ForeignKey('profiles.user_type_id'), nullable=False)
 
    # Define a relationship
-    profile = db.relationship("Profile", uselist=False, backref=db.backref("users"))
-    diet = db.relationship("Diet", secondary="users_diets", backref=db.backref("users"))
-    address = db.relationship("Address", backref=db.backref("users"))
-    favorite = db.relationship("Favorite", backref=db.backref("users"))
+    profile = db.relationship("Profile", uselist=False, backref=db.backref("user"))
+    diet = db.relationship("Diet", secondary="users_diets", backref=db.backref("user"))
+    address = db.relationship("Address", backref=db.backref("user"))
+    favorite = db.relationship("Favorite", backref=db.backref("user"))
 
 
     def __repr__(self):
@@ -71,7 +73,6 @@ class Profile(db.Model):
     __tablename__ = "profiles"
 
     user_type_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     type_name = db.Column(db.String(40), nullable=False, unique=True)
     type_define = db.Column(db.String(100), nullable=False)
 
@@ -79,8 +80,8 @@ class Profile(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Profile user_type_id={} profile_name={}".format(self.user_type_id,
-                                                            self.profile_define
+        return "<Profile user_type_id={} type_name={} type_define={}".format(self.user_type_id,
+                                                            self.type_name, self.type_define
                                                             )
 
 
@@ -156,9 +157,9 @@ class Visit(db.Model):
 
 
     # Define a relationship
-    user = db.relationship("User", backref=db.backref("visits"))
-    rating = db.relationship("Rating", backref=db.backref("visits"))
-    restaurant = db.relationship("Restaurant", backref=db.backref("visits"))
+    user = db.relationship("User", backref=db.backref("visit"))
+    rating = db.relationship("Rating", backref=db.backref("visit"))
+    restaurant = db.relationship("Restaurant", backref=db.backref("visit"))
 
 
     def __repr__(self):
