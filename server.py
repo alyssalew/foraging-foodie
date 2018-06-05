@@ -115,6 +115,22 @@ def get_more_info():
     print "You just requested more info about a restaurant from the Yelp API!"
     return yelp_biz_id  # JSON of more info
 
+@app.route("/register")
+def show_registration_form():
+    """ Displays registration form """
+
+    return render_template("registration.html")
+
+@app.route("/registration-info", methods=['POST'])
+def process_registration_info():
+    """ Processing registration form """
+
+    print "Registered User"
+
+    return redirect('/')
+
+
+
 
 #########################################################################
 if __name__ == "__main__":
