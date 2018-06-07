@@ -74,14 +74,18 @@ class Profile(db.Model):
 
     user_type_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     type_name = db.Column(db.String(40), nullable=False, unique=True)
-    type_define = db.Column(db.String(100), nullable=False)
+    type_taste = db.Column(db.ARRAY(db.String(50)), nullable=False, default=[])
+    type_price = db.Column(db.ARRAY(db.String(50)), nullable=False, default=[])
+    type_temp = db.Column(db.ARRAY(db.String(50)), nullable=False, default=[])
+    type_diet = db.Column(db.ARRAY(db.String(50)), nullable=False, default=[])
+
 
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Profile user_type_id={} type_name={} type_define={}".format(self.user_type_id,
-                                                            self.type_name, self.type_define
+        return "<Profile user_type_id={} type_name={} [type_taste] [type_price] [type_temp] [type_diet]>".format(self.user_type_id,
+                                                            self.type_name
                                                             )
 
 

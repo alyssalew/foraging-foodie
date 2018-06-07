@@ -1,7 +1,7 @@
 from sqlalchemy import func
+
 from model import User, Address, Profile, Diet, UserDiet, Favorite, Visit, Rating, Restaurant
 from datetime import date
-
 
 from model import connect_to_db, db
 from server import app
@@ -37,28 +37,19 @@ def load_profiles():
     # we won't be trying to add duplicate users
     Profile.query.delete()
 
-    PROFILES = {'foodie': ['spicy', 'salty', 'sweet', 'umami']
+    foodie = Profile(type_name="foodie", type_taste=['spicy', 'salty', 'sweet', 'umami'])
+    starving_student = Profile(type_name="starving_student", type_price=['1'])
+    health_nut = Profile(type_name="health_nut", type_diet=['vegan', 'gluten_free'])
+    heat_seeker = Profile(type_name="heat_seeker", type_taste=['spicy'], type_temp= ['hot'])
+    garbage_disposal = Profile(type_name="garbage_disposal")
 
 
-                            # {'taste': ['spicy', 'salty', 'sweet', 'umami']}
-                # 'starving student': [
-                #                     {'price':'1'}
-                #                     ],
-                # 'health nut': [
-                #             {'diet_restrict': ['vegan', 'gluten_free']}
-                #             ],
-                # 'heat seaker': [
-                #                 {'taste': ['spicy']},
-                #                 {'temp': ['hot']}
-                #             ]
-                }
-
-    for name, definition in PROFILES.items():
-
-        profile = Profile(type_name=name, type_define=definition)
-
-        # We need to add to the session or it won't ever be stored
-        db.session.add(profile)
+    # We need to add to the session or it won't ever be stored
+    db.session.add(foodie)
+    db.session.add(starving_student)
+    db.session.add(health_nut)
+    db.session.add(heat_seeker)
+    db.session.add(garbage_disposal)
 
     # Once we're done, we should commit our work
     db.session.commit()
