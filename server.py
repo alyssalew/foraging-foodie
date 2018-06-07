@@ -9,6 +9,13 @@ from jinja2 import StrictUndefined
 
 import yelp_api  # Import the things needed to use the Yelp API, personal category definitions
 
+# Import the things needed to use the model
+from model import User, Address, Profile, Diet, UserDiet, Favorite, Visit, Rating, Restaurant
+from datetime import date
+
+from model import connect_to_db, db
+
+
 from flask import (Flask, render_template, redirect, request, flash, session)
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -127,9 +134,25 @@ def process_registration_info():
 
     print "Registered User"
 
+    first_name = request.form.get("first_name")
+    last_name = request.form.get("last_name")
+    email = request.form.get("email")
+    password = request.form.get("password")
+    user_type_id = request.form.get("profile")
+
+    print "First:", first_name
+    print "Last:", last_name
+    print "Email:", email
+    print "PW:", password
+    print "Profile:", user_type_id
+
+    user = User(first_name=first_name, last_name=last_name, email=email, password=password, user_type_id=user_type_id)
+    db.session.add(user)
+    db.session.commit()
+
+
+    flash("You are now registered!")
     return redirect('/')
-
-
 
 
 #########################################################################
@@ -140,7 +163,7 @@ if __name__ == "__main__":
     # make sure templates, etc. are not cached in debug mode
     app.jinja_env.auto_reload = app.debug
 
-    # connect_to_db(app) <<  Uncomment when have a DB to connect to
+    connect_to_db(app)
 
     # Use the DebugToolbar
     DebugToolbarExtension(app)
