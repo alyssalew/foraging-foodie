@@ -128,11 +128,11 @@ def show_registration_form():
 
     return render_template("registration.html")
 
-@app.route("/registration-info", methods=['POST'])
-def process_registration_info():
-    """ Processing registration form """
+@app.route("/verify-registration", methods=['POST'])
+def verify_registration():
+    """ Verify registration form """
 
-    print "Registered User"
+    print "User Registration"
 
     first_name = request.form.get("first_name")
     last_name = request.form.get("last_name")
@@ -146,13 +146,92 @@ def process_registration_info():
     print "PW:", password
     print "Profile:", user_type_id
 
-    user = User(first_name=first_name, last_name=last_name, email=email, password=password, user_type_id=user_type_id)
-    db.session.add(user)
-    db.session.commit()
+    # Look for the email in the DB
+    existing_user = User.query.filter(User.email == email).all()
+
+    if len(existing_user) == 0:
+        print "New User"
+        user = User(first_name=first_name, last_name=last_name, email=email, password=password, user_type_id=user_type_id)
+        db.session.add(user)
+        db.session.commit()
+        flash("You are now registered!")
+        return redirect('/')
+
+    elif len(existing_user) == 1:
+        print "Existing user"
+        flash("You're already registered!")
+        return redirect('/')
+
+    else:
+        print "MAJOR PROBLEM!"
+        flash("You have found a website loophole... Please try again later.")
+        return redirect("/")
+
+@app.route('/login')
+def show_login_form():
+    """ Show login form"""
+    return render_template('login.html')
 
 
-    flash("You are now registered!")
-    return redirect('/')
+@app.route('/verify-login', methods=["POST"])
+def verify_login():
+    """ Verify user and add to session """
+
+    login_email = request.form.get("email")
+    login_password = request.form.get("password")
+
+    print login_email, login_password
+
+    # Get user object
+    existing_user = User.query.filter(User.email == login_email).all()
+
+    # In DB?
+    if len(existing_user) == 1:
+        print "Email in DB"
+        existing_password = existing_user[0].password
+
+        # Correct password?
+        if login_password == existing_password:
+            if 'login' in session:
+                flash("You are already logged in!")
+                return redirect('/')
+            else:
+                #Add to session
+                session['login'] = existing_user[0].user_id
+                flash("Success, you are now logged in!")
+                return redirect('/')
+        else:
+            flash("Incorrect password. Please try again.")
+            return redirect('/login')
+
+    # Not in DB
+    elif len(existing_user) == 0:
+        print "Email not in DB"
+        flash("That email couldn't be found. Please try again.")
+        return redirect('/login')
+
+    else:
+        print "MAJOR PROBLEM!"
+        flash("You have found a website loophole... Please try again later.")
+        return redirect("/")
+
+
+@app.route('/logout')
+def logout():
+    """Logs user out """
+
+    if 'login' in session:
+        session.pop('login')
+        flash("Goodbye, you are now logged out!")
+        return redirect('/')
+    else:
+        flash("You were never logged in :(")
+        return redirect('/')
+
+
+
+
+
 
 
 #########################################################################
