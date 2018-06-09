@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    
+    <!-- <p> User Id: {{user_object.user_id}} </p> -->
+    <p> Hello {{user_object.first_name}} {{user_object.last_name}}! </p>
+
+    <p>Email: {{user_object.email}}</p>
+
+    <p>Your profile: {{user_object.profile.type_name|title}}</p>
+
+    <h4> Your addresses: </h4>
+    {% for address in user_object.address %}
+        <p>{{address.address_label|title}} -- {{address.address}}</p>
+    {% endfor %}
+
+    <h4> Your visits: </h4>
+    {% for visit in user_object.visit %}
+        <p> {{visit.restaurant.name}}, {{visit.visit_date.strftime('%B-%d-%Y')}}, {{"*" * visit.rating.score}} </p>
+    {% endfor %}
+
+    <h4> Your Favorites: </h4>
+    {% for favorite in user_object.favorite %}
+        <p> {{favorite}} </p>
+    {% endfor %}
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

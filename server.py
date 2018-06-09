@@ -229,7 +229,21 @@ def logout():
         return redirect('/')
 
 
+@app.route('/my-profile')
+def shows_user_profile():
+    """ Shows info about the user """
 
+    if 'login' in session:
+        user_id = session['login']
+
+        user_object = User.query.get(user_id)
+        print user_object
+
+        return render_template('my-profile.html', user_object=user_object)
+
+    else:
+        flash("You aren't logged in. Login here!")
+        return redirect('/login')
 
 
 
