@@ -102,7 +102,7 @@ class Diet(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Diet diet_id={} diet_name={}".format(self.diet_id, self.diet_name)
+        return "<Diet diet_id={} diet_name={}>".format(self.diet_id, self.diet_name)
 
 
 
@@ -119,7 +119,7 @@ class UserDiet(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<UserDiet user_diet_id={} user_id={} diet_id={}".format(self.user_diet_id,
+        return "<UserDiet user_diet_id={} user_id={} diet_id={}>".format(self.user_diet_id,
                                                                     self.user_id, self.diet_id
                                                                     )
 
@@ -139,7 +139,7 @@ class Favorite(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Favorite favorite_id={} user_id={} restaurant_id={} favorite={}".format(
+        return "<Favorite favorite_id={} user_id={} restaurant_id={} favorite={}>".format(
                                                                                 self.favorite_id,
                                                                                 self.user_id,
                                                                                 self.restaurant_id,
