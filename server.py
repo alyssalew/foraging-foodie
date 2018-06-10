@@ -279,6 +279,58 @@ def add_address():
     return jsonify(new_address,'/templates/dynamic-profile',render_template('my-profile.html', user_object=user_object))
 
 
+# Helper Function: Check if restaurant in table already
+def get_restaurant_id(yelp_id, rest_name):
+    """ Finds restaurant_id for restaurants, adds restaurant if not yet in table """
+
+    existing_restaurant = Restaurant.query.filter(Restaurant.yelp_biz_id == yelp_id).all()
+
+    if len(existing_restaurant) == 1:
+        print "Existing"
+        restaurant_id = existing_restaurant[0].restaurant_id
+        return restaurant_id
+
+    elif len(existing_restaurant) == 0:
+        print "New"
+        restaurant = Restaurant(yelp_biz_id=yelp_id, name=rest_name)
+        db.session.add(restaurant)
+        db.session.commit()
+
+        return get_restaurant_id(yelp_id, rest_name)
+
+
+
+@app.route('/new-visit', methods=['POST'])
+def add_visit():
+    """ Adds new visit for a user """
+
+    if 'login' in session:
+        user_id = session['login']
+
+        yelp_id = request.form.get("yelp_id")
+        rest_name = request.form.get("rest_name")
+        date = request.form.get("visit_date")
+        rating = request.form.get("rating")
+
+        restaurant_id = get_restaurant_id(yelp_id, rest_name)
+
+        print restaurant_id, yelp_id, rest_name, date, rating
+
+        v = Visit(user_id=user_id, restaurant_id=restaurant_id, rating_id=rating, visit_date=date)
+        print v
+        db.session.add(v)
+        db.session.commit()
+
+        flash("Visit Added!")
+        return redirect('/my-profile')
+
+
+    else:
+        flash("You aren't logged in. Login here!")
+        return redirect('/login')
+
+
+
 
 #########################################################################
 if __name__ == "__main__":
