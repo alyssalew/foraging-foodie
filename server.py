@@ -119,8 +119,12 @@ def get_more_info():
     yelp_biz_id = request.args.get("biz_id")
 
     # json_dict = yelp_api.request_restaurant_details(yelp_biz_id)
-    print "You just requested more info about a restaurant from the Yelp API!"
-    return yelp_biz_id  # JSON of more info
+    # print "You just requested more info about a restaurant from the Yelp API!"
+    # print yelp_biz_id
+    # print json_dict
+
+    return jsonify(json_dict)
+    # return yelp_biz_id
 
 @app.route("/register")
 def show_registration_form():
