@@ -63,13 +63,26 @@
         <!-- {# {% for restaurant in response_info.businesses %} #} -->
             <!-- <a href="{{restaurant.url}}">{{restaurant.name}}</a> <br>  url goes to yelp pg  -->
             <div>
-                <div id="restaurant_name"> {{restaurant.name}} 
-                    <!-- <button type="button" class="btn btn-info" id = "my_button" value="{{restaurant.id}}"> More Info {{restaurant.id}} </button> -->
+               <div id="restaurant_name"> {{restaurant.name}} 
+                   <!--  <button type="button" class="btn btn-info" id= "my_button" value="{{restaurant.id}}"> More Info {{restaurant.id}} </button> -->
                 </div>
-                <div id="restaurant_rating"> Avg Rating: {{restaurant.rating}} </div>
-                <div id="restaurant_price"> Price: {{restaurant.price}} </div>
-                <div id="restaurant_address"> Address: {{restaurant.location.display_address|join(', ')}}
-                <div id="restaurant_phone"> Phone: {{restaurant.display_phone}} </div>
+                
+                <!-- Collapsible Button -->
+                <p>
+                  <button class="btn btn-primary" type="button" id= "my_button{{restaurant.id}}" value="{{restaurant.id}}" data-toggle="collapse" data-target="#collapseExample{{restaurant.id}}" aria-expanded="false" aria-controls="collapseExample">
+                    More Info {{restaurant.id}}
+                  </button>
+                </p>
+                <div class="collapse" id="collapseExample{{restaurant.id}}">
+                  <div class="card card-body">
+                    <!-- More info to be added here by AJAX -->
+                    Avg Rating: {{restaurant.rating}} <br>
+                    Price: {{restaurant.price}} <br>
+                    Address: {{restaurant.location.display_address|join(', ')}} <br>
+                    Phone: {{restaurant.display_phone}} <br>
+                  </div>
+                </div>
+
                 <div class="image"><img src="{{restaurant.image_url}}"></div>
             </div>
             <br>
