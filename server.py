@@ -16,7 +16,7 @@ from datetime import date
 from model import connect_to_db, db
 
 
-from flask import (Flask, render_template, redirect, request, flash, session)
+from flask import (Flask, render_template, redirect, request, flash, session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
 
 
@@ -245,6 +245,34 @@ def shows_user_profile():
         flash("You aren't logged in. Login here!")
         return redirect('/login')
 
+@app.route('/new-address', methods=['POST'])
+def add_address():
+    """ Adds new address for a user """
+
+    label = request.form.get("label")
+    address1 = request.form.get("address1")
+    city = request.form.get("city")
+    state = request.form.get("state")
+    zipcode = request.form.get("zipcode")
+
+    print "New address added"
+
+    user_id = session['login']
+
+    address = Address(user_id=user_id, address_label=label,
+                address="{}, {}, {} {}".format(address1, city, state, zipcode))
+
+    print address
+    db.session.add(address)
+    db.session.commit()
+
+    new_address = {"label": label,
+                    "address": "{}, {}, {} {}".format(address1, city, state, zipcode)
+                    }
+
+    user_object = User.query.get(user_id)
+
+    return jsonify(new_address,'/templates/dynamic-profile',render_template('my-profile.html', user_object=user_object))
 
 
 

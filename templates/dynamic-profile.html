@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class= "dynamic">
+    {% for address in user_object.address %}
+            <p>{{address.address_label|title}} -- {{address.address}}</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
