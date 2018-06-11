@@ -70,96 +70,112 @@
                 <!-- Collapsible Button -->
                 <p>
                   <button class="btn btn-primary" type="button" id= "my_button{{restaurant.id}}" value="{{restaurant.id}}" data-toggle="collapse" data-target="#collapseExample{{restaurant.id}}" aria-expanded="false" aria-controls="collapseExample">
-                    More Info {{restaurant.id}}
+                    More Info
+                  </button>
+                  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample{{restaurant.id}}" aria-expanded="false" aria-controls="multiCollapseExample2">
+                    Add a Visit
                   </button>
                 </p>
-                <div class="collapse" id="collapseExample{{restaurant.id}}">
-                  <div class="card card-body">
-                    <!-- More info to be added here by AJAX -->
-                    Avg Rating: {{restaurant.rating}} <br>
-                    Price: {{restaurant.price}} <br>
-                    Address: {{restaurant.location.display_address|join(', ')}} <br>
-                    Phone: {{restaurant.display_phone}} <br>
+                
+                <div class="row">
+                  <div class="col">
+                    <div class="collapse multi-collapse" id="collapseExample{{restaurant.id}}">
+                      <div class="card card-body">
+                        <!-- More info to be added here by AJAX -->
+                        Avg Rating: {{restaurant.rating}} <br>
+                        Price: {{restaurant.price}} <br>
+                        Address: {{restaurant.location.display_address|join(', ')}} <br>
+                        Phone: {{restaurant.display_phone}} <br>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="collapse multi-collapse" id="multiCollapseExample{{restaurant.id}}">
+                      <div class="card card-body">
+                        
+                        <!-- Visit Form -->
+                        <form action="/new-visit" method="POST">
+                          <input type="hidden" name="yelp_id" value="{{restaurant.id}}">
+                          <input type="hidden" name="rest_name" value="{{restaurant.name}}">
+                          <div class="form-group row">
+                            <label for="inputDate" class="col-sm-2 col-form-label">Date</label>
+                            <div class="col-sm-6">
+                              <input type="date" class="form-control" name="visit_date" id="inputDate" required>
+                            </div>
+                          </div>
+                          <fieldset class="form-group">
+                            <div class="row">
+                              <legend class="col-form-label col-sm-2 pt-0">Rating</legend>
+                              <div class="col-sm-6">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="rating" id="gridRadios1" value="1">
+                                  <label class="form-check-label" for="gridRadios1">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="rating" id="gridRadios2" value="2">
+                                  <label class="form-check-label" for="gridRadios2">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="rating" id="gridRadios3" value="3">
+                                  <label class="form-check-label" for="gridRadios3">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="rating" id="gridRadios4" value="4">
+                                  <label class="form-check-label" for="gridRadios4">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                  </label>
+                                </div>
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="rating" id="gridRadios5" value="5">
+                                  <label class="form-check-label" for="gridRadios5">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          <br>  
+                          <div class="form-group row">
+                            <div class="col-sm-6">
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                          </div>
+                        </form>           
+
+                      </div>
+                    </div>
                   </div>
                 </div>
 
+                <br>
                 <div class="image"><img src="{{restaurant.image_url}}"></div>
             </div>
-            <br>
-
-            Visit
-            <form action="/new-visit" method="POST">
-                <input type="hidden" name="yelp_id" value="{{restaurant.id}}">
-                <input type="hidden" name="rest_name" value="{{restaurant.name}}">
-              <div class="form-group row">
-                <label for="inputDate" class="col-sm-2 col-form-label">Date</label>
-                <div class="col-sm-3">
-                  <input type="date" class="form-control" name="visit_date" id="inputDate" required>
-                </div>
-              </div>
-              <fieldset class="form-group">
-                <div class="row">
-                  <legend class="col-form-label col-sm-2 pt-0">Rating</legend>
-                  <div class="col-sm-3">
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="rating" id="gridRadios1" value="1">
-                      <label class="form-check-label" for="gridRadios1">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="rating" id="gridRadios2" value="2">
-                      <label class="form-check-label" for="gridRadios2">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="rating" id="gridRadios3" value="3">
-                      <label class="form-check-label" for="gridRadios3">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="rating" id="gridRadios4" value="4">
-                      <label class="form-check-label" for="gridRadios4">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="rating" id="gridRadios5" value="5">
-                      <label class="form-check-label" for="gridRadios5">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              <div class="form-group row">
-                <div class="col-sm-3">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </div>
-            </form>           
-        
+            <br>      
         {% endfor %}
  
     </div> 
