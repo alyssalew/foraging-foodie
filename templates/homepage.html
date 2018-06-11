@@ -4,113 +4,129 @@
 <h1> Welcome to The Foraging Foodie </h1>
 <p>Find a restaurant you should visit!</p>
 
-<h3>Search</h3>
-<p> Fill in the form to get a list of recommended restaurants:</p>
+<!-- <h3>Search</h3>
+<p> Fill in the form to get a list of recommended restaurants:</p> -->
 
-<form action='/results' method ="POST">
-  <div class="form-group">
-    <!-- Need to figure out how to make only of these location options required -->
-    <label for="location"> Location </label>
-    <input type="text" class="form-control" name= "location" id="location" placeholder=" eg. San Francisco" required>
-    <small id="locationHelpBlock" class="form-text text-muted">
-      Your location can be an address, neighborhood, city, state or zipcode.
-    </small>
-   <!--  <div class="form-check">
-      <input class="form-check-input" type="radio" name="current_location" id="current_location" value="current_location">
-      <label class="form-check-label" for="current_location"> Or use my current location </label>
-    </div> -->
-  </div>
+<div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-outline-primary btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          Find Restaurants! 
+        </button>
+      </h5>
+    </div>
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
 
-  <div class="form-group">
-    <label for="radius"> Distance from location (miles) </label>
-    <input type="number" class="form-control" name="radius" id="radius" placeholder="10 mi" min="1" max="24" required>
-  </div>
+        <form action='/results' method ="POST">
+          <div class="form-group">
+            <!-- Need to figure out how to make only of these location options required -->
+            <label for="location"> Location </label>
+            <input type="text" class="form-control" name= "location" id="location" placeholder=" eg. San Francisco" required>
+            <small id="locationHelpBlock" class="form-text text-muted">
+              Your location can be an address, neighborhood, city, state or zipcode.
+            </small>
+           <!--  <div class="form-check">
+              <input class="form-check-input" type="radio" name="current_location" id="current_location" value="current_location">
+              <label class="form-check-label" for="current_location"> Or use my current location </label>
+            </div> -->
+          </div>
 
-  <div class="form-group">
-    <label for="limit"> Limit my results to ___ restaurants </label>
-    <input type="number" class="form-control" name="limit" id="limit" placeholder="eg. 5" min="1" max="10"> 
-    <!-- Min/Max working to validate, but still lets you type big #  -->
-  </div>
-  <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" name="price" id="price1" value="1">
-      <label class="form-check-label" for="price1"> $ </label>
-  </div>
-  <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" name="price" id="price2" value="2">
-      <label class="form-check-label" for="price2"> $$ </label>
-  </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" name="price" id="price3" value="3">
-      <label class="form-check-label" for="price3"> $$$ </label>
-  </div>
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" name="price" id="price4" value="4">
-      <label class="form-check-label" for="price4"> $$$$ </label>
-  </div>
+          <div class="form-group">
+            <label for="radius"> Distance from location (miles) </label>
+            <input type="number" class="form-control" name="radius" id="radius" placeholder="10 mi" min="1" max="24" required>
+          </div>
 
-  <div class="form-check">
-      <input class="form-check-input" type="checkbox" name= "open_now" id="open_now" value="true" >
-      <label class="form-check-label" for="open_now"> Open now? </label>
+          <div class="form-group">
+            <label for="limit"> Limit my results to ___ restaurants </label>
+            <input type="number" class="form-control" name="limit" id="limit" placeholder="eg. 5" min="1" max="10"> 
+            <!-- Min/Max working to validate, but still lets you type big #  -->
+          </div>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" name="price" id="price1" value="1">
+              <label class="form-check-label" for="price1"> $ </label>
+          </div>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" name="price" id="price2" value="2">
+              <label class="form-check-label" for="price2"> $$ </label>
+          </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" name="price" id="price3" value="3">
+              <label class="form-check-label" for="price3"> $$$ </label>
+          </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" name="price" id="price4" value="4">
+              <label class="form-check-label" for="price4"> $$$$ </label>
+          </div>
+
+          <div class="form-check">
+              <input class="form-check-input" type="checkbox" name= "open_now" id="open_now" value="true" >
+              <label class="form-check-label" for="open_now"> Open now? </label>
+          </div>
+
+          <div class="form-group">
+            <div> Dietary Restrictions </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="diet_restrict" id="vegan" value="vegan">
+              <label class="form-check-label" for="vegan"> Vegan </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="diet_restrict" id="vegetarian" value="vegetarian" >
+              <label class="form-check-label" for="vegetarian"> Vegetarian </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="diet_restrict" id="gluten_free" value="gluten_free">
+              <label class="form-check-label" for="gluten_free"> Gluten-free </label>
+            </div>
+             <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="diet_restrict" id="kosher" value="kosher">
+              <label class="form-check-label" for="kosher"> Kosher </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="diet_restrict" id="halal" value="halal" >
+              <label class="form-check-label" for="halal"> Halal </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div> Taste </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="taste" id="spicy" value="spicy">
+              <label class="form-check-label" for="spicy"> Spicy </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="taste" id="salty" value="salty">
+              <label class="form-check-label" for="salty"> Salty </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="taste" id="sweet" value="sweet">
+              <label class="form-check-label" for="sweet"> Sweet </label>
+            </div>
+             <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="taste" id="umami" value="umami">
+              <label class="form-check-label" for="umami"> Umami </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div> Temperature </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="temp" id="hot" value="hot">
+              <label class="form-check-label" for="hot"> Hot </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="temp" id="cold" value="cold">
+              <label class="form-check-label" for="cold"> Cold </label>
+            </div>
+          </div>    
+           <button type="submit" class="btn btn-primary"> Submit </button>
+        </form>
+
+      </div>
+    </div>
   </div>
-
-  <div class="form-group">
-    <div> Dietary Restrictions </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="diet_restrict" id="vegan" value="vegan">
-      <label class="form-check-label" for="vegan"> Vegan </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="diet_restrict" id="vegetarian" value="vegetarian" >
-      <label class="form-check-label" for="vegetarian"> Vegetarian </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="diet_restrict" id="gluten_free" value="gluten_free">
-      <label class="form-check-label" for="gluten_free"> Gluten-free </label>
-    </div>
-     <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="diet_restrict" id="kosher" value="kosher">
-      <label class="form-check-label" for="kosher"> Kosher </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="diet_restrict" id="halal" value="halal" >
-      <label class="form-check-label" for="halal"> Halal </label>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div> Taste </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="taste" id="spicy" value="spicy">
-      <label class="form-check-label" for="spicy"> Spicy </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="taste" id="salty" value="salty">
-      <label class="form-check-label" for="salty"> Salty </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="taste" id="sweet" value="sweet">
-      <label class="form-check-label" for="sweet"> Sweet </label>
-    </div>
-     <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="taste" id="umami" value="umami">
-      <label class="form-check-label" for="umami"> Umami </label>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div> Temperature </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="temp" id="hot" value="hot">
-      <label class="form-check-label" for="hot"> Hot </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="temp" id="cold" value="cold">
-      <label class="form-check-label" for="cold"> Cold </label>
-    </div>
-  </div>    
-
-   <button type="submit" class="btn btn-primary"> Submit </button>
-</form>
+</div>
 
 <script>
 var x = document.getElementById("current_location");
