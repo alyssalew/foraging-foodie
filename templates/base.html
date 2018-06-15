@@ -16,19 +16,25 @@
 
      <title> Foraging Foodie </title>
 
-        <!-- For flash messages -->
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul class=flashes>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-info" style="background-color: #e3f2fd;">
+          <a class="navbar-brand" href="/">Foraging Foodie</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-item nav-link" href="/register">Register</a>
+              <a class="nav-item nav-link" href="/login">Log in</a>
+              <a class="nav-item nav-link" href="/logout">Log out</a>
+              <a class="nav-item nav-link" href="/my-profile">My Profile</a>
+            </div>
+          </div>
+        </nav>
 
-        <div class="container-fluid">
-            <!--  Header menu -->
+
+        <!-- <div class="container-fluid">
+              Header menu 
             <a href="/"> Foraging Foodie </a>
             <div id="login_reg">
                 <h6>Login &amp; Registration</h6>
@@ -38,11 +44,25 @@
                 <p><a href="/my-profile">My Profile</a></p>
             </div>
             <hr>
-        </div>
+        </div> -->
   </head>  
   <body>
     <div class="container-fluid">
+         <!-- For flash messages -->
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
         {% block content %} put the content here {% endblock %}
+
+        
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -58,5 +78,10 @@
         <script src="/static/js/add-address.js"></script>
 
     </div>
+    <!-- <footer class="footer fixed-bottom">
+          <div class="container">
+            <span class="text-muted"></span>
+          </div>
+    </footer> -->
   </body>
 </html>
