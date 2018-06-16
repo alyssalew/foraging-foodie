@@ -23,5 +23,19 @@ dl, ol, ul {
 }
 
 .checked {
-    color: orange;
+    color: #ffa928;
 }
+
+.btn-success {
+    color: #fff;
+    background-color: #054c03;
+    border-color: #054c03;
+    }
+
+
+.btn-danger {
+    color: #fff;
+    background-color: #5c0029;
+    border-color: #5c0029;
+    }
+
