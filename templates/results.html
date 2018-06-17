@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <div>
+    <div class="col-sm-12" id="filter-criteria">
     Showing results for ... <br>
         <div> 
             <li> Resturants located within {{radius}} miles of {{location}}
@@ -15,7 +15,10 @@
             {% if price %}
                 <li> Prices:
                 {% for p in price %}
-                    {{p}}
+                    {{ "$" * p|int}}
+                    {% if not loop.last %}
+                    ,
+                  {% endif %}
                 {% endfor %}
             {% endif %}
         </div>
@@ -28,7 +31,10 @@
             {% if diet_restrict %}
                 <li> Dietary Restrictions:
                 {% for d in diet_restrict %}
-                    {{d}} 
+                    {{d|title}}
+                    {% if not loop.last %}
+                    ,
+                  {% endif %} 
                 {% endfor %}
             {% endif %}
         </div>
@@ -36,7 +42,10 @@
             {% if taste %}
                 <li> Tastes:
                 {% for t in taste %}
-                    {{t}} 
+                    {{t|title}}
+                    {% if not loop.last %}
+                      ,
+                    {% endif %}
                 {% endfor %}
             {% endif %}
         </div>
@@ -44,17 +53,19 @@
             {% if temp %}
                 <li> Temperatures:
                 {% for t in temp %}
-                    {{t}} 
+                    {{t|title}}
+                    {% if not loop.last %}
+                    ,
+                  {% endif %} 
                 {% endfor %}
             {% endif %}
         </div>
-
-    </div> <br>
+    </div>
 
     <div> 
-        <div id="no_results"> 
+        <div id="no-results" div class="flashes"> 
             {% if not filtered_list %}
-                Sorry no restaurants match your criteria :( <br>
+                Sorry no restaurants match your criteria <i class="far fa-frown"></i> <br>
                 Please try to search again!
             {% endif %}
         </div>
@@ -63,22 +74,22 @@
         <!-- {# {% for restaurant in response_info.businesses %} #} -->
             <!-- <a href="{{restaurant.url}}">{{restaurant.name}}</a> <br>  url goes to yelp pg  -->
             <div>
-               <div id="restaurant_name"> {{restaurant.name}} 
+               <div class="restaurant_name"> {{restaurant.name}} 
                    <!--  <button type="button" class="btn btn-info" id= "my_button" value="{{restaurant.id}}"> More Info {{restaurant.id}} </button> -->
                 </div>
 
                 <!-- Collapsible Button -->
                 <p>
-                  <button class="btn btn-primary" type="button" id= "my_button{{restaurant.id}}" value="{{restaurant.id}}" data-toggle="collapse" data-target="#collapseExample{{restaurant.id}}" aria-expanded="false" aria-controls="collapseExample">
+                  <button class="btn btn-success btn-sm" type="button" id= "my_button{{restaurant.id}}" value="{{restaurant.id}}" data-toggle="collapse" data-target="#collapseExample{{restaurant.id}}" aria-expanded="false" aria-controls="collapseExample">
                     More Info
                   </button>
-                  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample{{restaurant.id}}" aria-expanded="false" aria-controls="multiCollapseExample2">
+                  <button class="btn btn-success btn-sm" type="button" data-toggle="collapse" data-target="#multiCollapseExample{{restaurant.id}}" aria-expanded="false" aria-controls="multiCollapseExample2">
                     Add a Visit
                   </button>
                 </p>
                 
                 <div class="row">
-                  <div class="col">
+                  <div class="col-sm-6">
                     <div class="collapse multi-collapse" id="collapseExample{{restaurant.id}}">
                       <div class="card card-body">
                         <!-- More info to be added here by AJAX -->
@@ -89,7 +100,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col">
+                  <div class="col-sm-6">
                     <div class="collapse multi-collapse" id="multiCollapseExample{{restaurant.id}}">
                       <div class="card card-body">
                         
@@ -99,7 +110,7 @@
                           <input type="hidden" name="rest_name" value="{{restaurant.name}}">
                           <div class="form-group row">
                             <label for="inputDate" class="col-sm-2 col-form-label">Date</label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                               <input type="date" class="form-control" name="visit_date" id="inputDate" required>
                             </div>
                           </div>
@@ -160,7 +171,7 @@
                               </div>
                             </div>
                           <br>  
-                          <div class="form-group row">
+                          <div id="visit-submit" class="form-group row">
                             <div class="col-sm-6">
                               <button type="submit" class="btn btn-success">Submit</button>
                             </div>
@@ -173,7 +184,9 @@
                 </div>
 
                 <br>
-                <div class="image"><img src="{{restaurant.image_url}}"></div>
+                <div class="image">
+                  <img class= "yelp-image" src="{{restaurant.image_url}}">
+                </div>
             </div>
             <br>      
         {% endfor %}

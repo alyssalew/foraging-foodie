@@ -9,10 +9,10 @@
     margin-left: auto;
 }
 
-dl, ol, ul {
+.flashes {
     margin-top: 0;
     margin-bottom: 1rem;
-    color: red;
+    color: darkred;
 }
 
 .footer{
@@ -33,7 +33,6 @@ dl, ol, ul {
     border-color: #054c03;
     }
 
-
 /*.btn-danger {
     color: #fff;
     background-color: #5c0029;
@@ -47,3 +46,27 @@ dl, ol, ul {
 /*#carousel-img {
     width: 550px;
 }*/
+
+
+#filter-criteria {
+    background-color: #ffedce;
+    padding: 10px;
+}
+
+#visit-submit {
+    margin-bottom: 0rem;
+}
+
+
+.restaurant_name {
+    font-size: 1.5rem;
+}
+
+.yelp-image {
+    width: 800px;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+#no-results {
+    text-align: center;
+}
