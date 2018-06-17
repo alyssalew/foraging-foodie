@@ -23,7 +23,7 @@
           <div class="form-group">
             <!-- Need to figure out how to make only of these location options required -->
             <label for="location"> Location </label>
-            <div class="col-sm-6">
+            <div class="col-sm-8">
               <input type="text" class="form-control" name= "location" id="location" placeholder=" eg. San Francisco" required>
 
               <small id="locationHelpBlock" class="form-text text-muted">
@@ -36,44 +36,59 @@
             </div> -->
           </div>
 
-          <div class="form-group">
-            <label for="radius"> Distance from location (miles) </label>
-            <div class="col-sm-4">
-              <input type="number" class="form-control" name="radius" id="radius" placeholder="10 mi" min="1" max="24" required>
+          <div class="row">
+            <div class='col-sm-4'>
+              <div class="form-group">
+                <label for="radius"> Distance from location (miles) </label>
+                <div class="col-sm-4">
+                  <input type="number" class="form-control" name="radius" id="radius" placeholder="10 mi" min="1" max="24" required>
+                </div>
+              </div>
+            </div>
+            <div class='col-sm-4'>
+              <div class="form-group">
+                <label for="limit"> Limit my results to ___ restaurants </label>
+                <div class="col-sm-4">
+                  <input type="number" class="form-control" name="limit" id="limit" placeholder="eg. 5" min="1" max="10"> 
+                  <!-- Min/Max working to validate, but still lets you type big #  -->
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="limit"> Limit my results to ___ restaurants </label>
-            <div class="col-sm-4">
-              <input type="number" class="form-control" name="limit" id="limit" placeholder="eg. 5" min="1" max="10"> 
-              <!-- Min/Max working to validate, but still lets you type big #  -->
-            </div>
-          </div>
-          <div class="form-group">
-            <div> Price </div>
-              <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" name="price" id="price1" value="1">
-                  <label class="form-check-label" for="price1"> $ </label>
-              </div>
-              <div class="form-check form-check-inline">
+          <div class="row">
+            <div class='col-sm-4'>
+              <div class="form-group">
+                <div> Price </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="price" id="price1" value="1">
+                    <label class="form-check-label" for="price1"> $ </label>
+                </div>
+                <div class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" name="price" id="price2" value="2">
                   <label class="form-check-label" for="price2"> $$ </label>
-              </div>
+                </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" name="price" id="price3" value="3">
                   <label class="form-check-label" for="price3"> $$$ </label>
-              </div>
+                </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" name="price" id="price4" value="4">
                   <label class="form-check-label" for="price4"> $$$$ </label>
+                </div>
               </div>
             </div>
-          <div class="form-check">
-              <input class="form-check-input" type="checkbox" name= "open_now" id="open_now" value="true" >
-              <label class="form-check-label" for="open_now"> Open now? </label>
+            <div class='col-sm-4'>
+              <div class="form-group">
+               <br>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name= "open_now" id="open_now" value="true" >
+                  <label class="form-check-label" for="open_now"> Open now? </label>
+                </div>
+              </div>
+            </div>
           </div>
-          <br>
+            
           <div class="row">
             <div class='col-sm-4'>
               <div class="form-group">
@@ -100,7 +115,7 @@
                 </div>
               </div>
             </div>
-            <div class='col-sm-3'>
+            <div class='col-sm-4'>
               <div class="form-group">
                 <div> Taste </div>
                 <div class="form-check">
@@ -139,6 +154,7 @@
            <button type="submit" class="btn btn-success"> Submit </button>
          </div>
         </form>
+
       </div>
     </div>
   </div>
