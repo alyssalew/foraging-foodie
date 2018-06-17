@@ -37,11 +37,11 @@ def load_profiles():
     # we won't be trying to add duplicate users
     Profile.query.delete()
 
-    foodie = Profile(type_name="foodie", type_taste=['spicy', 'salty', 'sweet', 'umami'])
-    starving_student = Profile(type_name="starving_student", type_price=['1'])
-    health_nut = Profile(type_name="health_nut", type_diet=['vegan', 'gluten_free'])
-    heat_seeker = Profile(type_name="heat_seeker", type_taste=['spicy'], type_temp= ['hot'])
-    garbage_disposal = Profile(type_name="garbage_disposal")
+    foodie = Profile(type_name="Foodie", type_taste=['spicy', 'salty', 'sweet', 'umami'])
+    starving_student = Profile(type_name="Starving Student", type_price=['1'])
+    health_nut = Profile(type_name="Health Nut", type_diet=['vegan', 'gluten_free'])
+    heat_seeker = Profile(type_name="Heat Seeker", type_taste=['spicy'], type_temp= ['hot'])
+    garbage_disposal = Profile(type_name="Garbage Disposal")
 
 
     # We need to add to the session or it won't ever be stored
@@ -80,7 +80,7 @@ def sample_user():
 
     print "Sample User"
 
-    alyssa = User(first_name="Alyssa", last_name= "Lew", email="alyssa@example.com", password="123", user_type_id=1)
+    alyssa = User(first_name="Alyssa", last_name="Lew", email="alyssa@example.com", password="123", user_type_id=1)
     db.session.add(alyssa)
     db.session.commit()
 
