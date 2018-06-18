@@ -13,6 +13,7 @@
     margin-top: 0;
     margin-bottom: 1rem;
     color: darkred;
+    font-weight: 600;
 }
 
 .footer{
@@ -68,5 +69,10 @@
 }
 
 #no-results {
+    text-align: center;
+}
+
+#greeting {
+    font-weight: 600;
     text-align: center;
 }

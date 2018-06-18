@@ -2,63 +2,86 @@
 {% block content %}
     
     <!-- <p> User Id: {{user_object.user_id}} </p> -->
-    <p> Hello {{user_object.first_name}} {{user_object.last_name}}! </p>
 
-    <p>Email: {{user_object.email}}</p>
+    <h2 id="greeting"> Hello {{user_object.first_name}} {{user_object.last_name}}! </h2>
+    <div>
+      <p> Email: {{user_object.email}}</p>
+      <p> Your profile: {{user_object.profile.type_name|title}}</p>
+    </div>
+    <br>
 
-    <p>Your profile: {{user_object.profile.type_name|title}}</p>
+    <div class="row">
+      <div class='col-sm-6'>
+        <h4> Your Addresses: </h4>
+        {% for address in user_object.address %}
+            <p>{{address.address_label|title}} -- {{address.address}}</p>
+        {% endfor %}
+      </div>
+      <div class='col-sm-6'>
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-outline-success" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  Add a new address
+                </button>
+              </h5>
+            </div>
+          </div>
 
-    <h4> Your addresses: </h4>
-    {% for address in user_object.address %}
-        <p>{{address.address_label|title}} -- {{address.address}}</p>
-    {% endfor %}
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+              <form id="new-address-form">
+                <div class="form-group row">
+                  <label for="inputLabel" class="col-sm-3 col-form-label">Address Label</label>
+                  <div class="col">
+                      <input type="text" class="form-control" id="inputLabel" placeholder="Eg. Home, Work, School" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputAddress">Address</label>
+                  <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-sm-6">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control" id="inputCity" placeholder="San Francisco">
+                  </div>
+                  <div class="form-group col-sm-4">
+                    <label for="inputState">State</label>
+                    <input type= "text" class="form-control" id="inputState" placeholder="CA" maxlength="2">
+                  </div>
+                  <div class="form-group col-sm-2">
+                    <label for="inputZip">Zip</label>
+                    <input type="number" class="form-control" id="inputZip" placeholder= "12345" max="99999">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-success">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <h4> Your visits: </h4>
-    {% for visit in user_object.visit %}
-        <p> {{visit.restaurant.name}}, {{visit.visit_date.strftime('%B-%d-%Y')}}, {{"*" * visit.rating.score}} </p>
-    {% endfor %}
+    <br>
+              
+    <div class="row">
+      <div class='col'>
+        <h4> Your Visits: </h4>
+        {% for visit in user_object.visit %}
+            <p> {{visit.restaurant.name}} ({{visit.visit_date.strftime('%B-%d-%Y')}}) 
+              {% for i in range(1, visit.rating.score) %}
+                <span class="fa fa-star checked"></span>
+              {% endfor %}
+            </p>
+        {% endfor %}
+      </div>
+    </div>
 
-    <h4> Your Favorites: </h4>
+   <!--  <h4> Your Favorites: </h4>
     {% for favorite in user_object.favorite %}
         <p> {{favorite}} </p>
-    {% endfor %}
-
-<h4> Add a new address:</h4>
-<form id="new-address-form">
-  <div class="form-group row">
-    <label for="inputLabel" class="col-sm-2 col-form-label">Address Label</label>
-    <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputLabel" placeholder="Eg. Home, Work, School" required>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="inputAddress">Address</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-  </div>
-  <div class="form-row">
-    <div class="form-group col-sm-6">
-      <label for="inputCity">City</label>
-      <input type="text" class="form-control" id="inputCity" placeholder="San Francisco">
-    </div>
-    <div class="form-group col-sm-4">
-      <label for="inputState">State</label>
-      <input type= "text" class="form-control" id="inputState" placeholder="CA" maxlength="2">
-    </div>
-    <div class="form-group col-sm-2">
-      <label for="inputZip">Zip</label>
-      <input type="number" class="form-control" id="inputZip" placeholder= "12345" max="99999">
-    </div>
-  </div>
-  <button type="submit" class="btn btn-success">Submit</button>
-</form>
-
-
-
-
-
-
-
-
-
+    {% endfor %} -->
 
 {% endblock %}
