@@ -202,7 +202,7 @@ def verify_login():
             else:
                 #Add to session
                 session['login'] = existing_user[0].user_id
-                flash("Success, you are now logged in!")
+                flash("Hi {}, you are now logged in!".format(existing_user[0].first_name))
                 return redirect('/')
         else:
             flash("Incorrect password. Please try again.")
@@ -336,7 +336,7 @@ def add_visit():
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension
-    app.debug = True
+    app.debug = False
     # make sure templates, etc. are not cached in debug mode
     app.jinja_env.auto_reload = app.debug
 

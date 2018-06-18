@@ -35,25 +35,25 @@
                 <div class="form-group row">
                   <label for="inputLabel" class="col-sm-3 col-form-label">Address Label</label>
                   <div class="col">
-                      <input type="text" class="form-control" id="inputLabel" placeholder="Eg. Home, Work, School" required>
+                      <input type="text" class="form-control" id="inputLabel" placeholder="e.g. Home, Work, School" required>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="inputAddress">Address</label>
-                  <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                  <input type="text" class="form-control" id="inputAddress" placeholder="e.g. 1234 Main St">
                 </div>
                 <div class="form-row">
                   <div class="form-group col-sm-6">
                     <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity" placeholder="San Francisco">
+                    <input type="text" class="form-control" id="inputCity" placeholder="City">
                   </div>
                   <div class="form-group col-sm-4">
                     <label for="inputState">State</label>
-                    <input type= "text" class="form-control" id="inputState" placeholder="CA" maxlength="2">
+                    <input type= "text" class="form-control" id="inputState" placeholder="State" maxlength="2">
                   </div>
                   <div class="form-group col-sm-2">
-                    <label for="inputZip">Zip</label>
-                    <input type="number" class="form-control" id="inputZip" placeholder= "12345" max="99999">
+                    <label for="inputZip">Zipcode</label>
+                    <input type="number" class="form-control" id="inputZip" placeholder= "Zip" max="99999">
                   </div>
                 </div>
                 <button type="submit" class="btn btn-success">Submit</button>
@@ -71,7 +71,7 @@
         <h4> Your Visits: </h4>
         {% for visit in user_object.visit %}
             <p> {{visit.restaurant.name}} ({{visit.visit_date.strftime('%B-%d-%Y')}}) 
-              {% for i in range(1, visit.rating.score) %}
+              {% for i in range(0, visit.rating.score) %}
                 <span class="fa fa-star checked"></span>
               {% endfor %}
             </p>
