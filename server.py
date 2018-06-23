@@ -15,6 +15,8 @@ from datetime import date
 
 from model import connect_to_db, db
 
+# Bcrypt for Password Hashing
+import bcrypt
 
 from flask import (Flask, render_template, redirect, request, flash, session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
@@ -144,10 +146,13 @@ def verify_registration():
     password = request.form.get("password")
     user_type_id = request.form.get("profile")
 
+    # Hash the password because security is important
+    hashed_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
     print "First:", first_name
     print "Last:", last_name
     print "Email:", email
-    print "PW:", password
+    print "PW:", hashed_pw
     print "Profile:", user_type_id
 
     # Look for the email in the DB
@@ -155,7 +160,7 @@ def verify_registration():
 
     if len(existing_user) == 0:
         print "New User"
-        user = User(first_name=first_name, last_name=last_name, email=email, password=password, user_type_id=user_type_id)
+        user = User(first_name=first_name, last_name=last_name, email=email, password=hashed_pw, user_type_id=user_type_id)
         db.session.add(user)
         db.session.commit()
         flash("You are now registered!")
@@ -194,8 +199,8 @@ def verify_login():
         print "Email in DB"
         existing_password = existing_user[0].password
 
-        # Correct password?
-        if login_password == existing_password:
+        # Correct password (hashed)?
+        if bcrypt.hashpw(login_password.encode('utf-8'), existing_password.encode('utf-8')) == existing_password:
             if 'login' in session:
                 flash("You are already logged in!")
                 return redirect('/')

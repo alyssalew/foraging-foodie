@@ -22,7 +22,7 @@ class User(db.Model):
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(40), nullable=False, unique=True)
-    password = db.Column(db.String(20), nullable=False)
+    password = db.Column(db.String(75), nullable=False)
     user_type_id = db.Column(db.Integer, db.ForeignKey('profiles.user_type_id'), nullable=False)
 
    # Define a relationship

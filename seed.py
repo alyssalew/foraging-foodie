@@ -1,3 +1,5 @@
+import bcrypt
+
 from sqlalchemy import func
 
 from model import User, Address, Profile, Diet, UserDiet, Favorite, Visit, Rating, Restaurant
@@ -80,7 +82,10 @@ def sample_user():
 
     print "Sample User"
 
-    alyssa = User(first_name="Alyssa", last_name="Lew", email="alyssa@example.com", password="123", user_type_id=1)
+    password = "123"
+    hashed_pw = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+    alyssa = User(first_name="Alyssa", last_name="Lew", email="alyssa@example.com", password=hashed_pw, user_type_id=1)
     db.session.add(alyssa)
     db.session.commit()
 
