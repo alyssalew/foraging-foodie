@@ -1,6 +1,6 @@
 import bcrypt
 
-from sqlalchemy import func
+# from sqlalchemy import func
 
 from model import User, Address, Profile, Diet, UserDiet, Favorite, Visit, Rating, Restaurant
 from datetime import date
