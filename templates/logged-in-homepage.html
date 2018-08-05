@@ -23,8 +23,20 @@
           <div class="form-group">
             <!-- Need to figure out how to make only of these location options required -->
             <label for="location"> Location </label>
+
+            <div class="col-sm-8" id="my-addresses">
+              {% for address in user_object.address %}
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio_{{address.address_label|title}}" value='{{address.address}}'>
+                  <label class="form-check-label" for="inlineRadio">{{address.address_label|title}}</label>
+                </div>
+              {% endfor %}
+            </div>
+
+            <!-- <div id="here"></div> -->
+
             <div class="col-sm-8">
-              <input type="text" class="form-control" name= "location" id="location" placeholder=" e.g. San Francisco" required>
+              <input type="text" class="form-control" name= "location" id="location" value="" placeholder=" e.g. San Francisco" required>
 
               <small id="locationHelpBlock" class="form-text text-muted">
                 Your location can be an address, neighborhood, city, state or zipcode.

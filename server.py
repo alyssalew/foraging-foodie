@@ -39,7 +39,11 @@ app.jinja_env.undefined = StrictUndefined
 def index():
     """ Homepage """
     if 'login' in session:
-        return render_template ('logged-in-homepage.html')
+
+        user_id = session['login']
+        user_object = User.query.get(user_id)
+
+        return render_template ('logged-in-homepage.html', user_object=user_object)
     else:
         return render_template('homepage.html')
 
@@ -335,8 +339,6 @@ def add_visit():
     else:
         flash("You aren't logged in. Login here!")
         return redirect('/login')
-
-
 
 
 #########################################################################
