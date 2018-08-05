@@ -7,7 +7,9 @@ function showAddressResults(results) {
 
     alert("You have addded a new address! \n" + address_obj['label'] + ": " + address_obj['address']);
     
-    $('.dynamic').append(results);
+    // $('.dynamic').append(results);
+
+    $("#new-address").html(address_obj['label']+ ' -- ' + address_obj['address'])
 
 }
 
