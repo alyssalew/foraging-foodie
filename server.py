@@ -38,8 +38,10 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def index():
     """ Homepage """
-
-    return render_template('homepage.html')
+    if 'login' in session:
+        return render_template ('logged-in-homepage.html')
+    else:
+        return render_template('homepage.html')
 
 
 @app.route('/results', methods=['POST'])
