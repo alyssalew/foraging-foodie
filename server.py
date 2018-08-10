@@ -35,7 +35,7 @@ app.jinja_env.undefined = StrictUndefined
 #########################################################################
 ##### Routes #####
 
-@app.route('/')
+@app.route('/foraging-foodie')
 def index():
     """ Homepage """
     if 'login' in session:
@@ -134,7 +134,7 @@ def get_more_info():
     return jsonify(json_dict)
     # return yelp_biz_id
 
-@app.route("/register")
+@app.route("/foraging-foodie/register")
 def show_registration_form():
     """ Displays registration form """
 
