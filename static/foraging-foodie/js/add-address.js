@@ -24,7 +24,7 @@ function submitAddress(evt) {
         "zipcode": $("#inputZip").val(),
     };
 
-    $.post('/new-address', formInputs, showAddressResults);
+    $.post('/foraging-foodie/new-address', formInputs, showAddressResults);
 }
 
 $("#new-address-form").on("submit", submitAddress);
