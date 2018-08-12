@@ -48,7 +48,7 @@ def index():
         return render_template('homepage.html')
 
 
-@app.route('/results', methods=['POST'])
+@app.route('/foraging-foodie/results', methods=['POST'])
 def search_form_processing():
     """ Processing the fields from the search form and sends request to Yelp Business Search endpoint"""
 
@@ -120,7 +120,7 @@ def search_form_processing():
                             )
 
 
-@app.route("/more-info.json")
+@app.route("/foraging-foodie/more-info.json")
 def get_more_info():
     """ Sends a request to the Yelp Business Details endpoint"""
 
@@ -140,7 +140,7 @@ def show_registration_form():
 
     return render_template("registration.html")
 
-@app.route("/verify-registration", methods=['POST'])
+@app.route("/foraging-foodie/verify-registration", methods=['POST'])
 def verify_registration():
     """ Verify registration form """
 
@@ -170,25 +170,25 @@ def verify_registration():
         db.session.add(user)
         db.session.commit()
         flash("You are now registered!")
-        return redirect('/')
+        return redirect('/foraging-foodie')
 
     elif len(existing_user) == 1:
         print "Existing user"
         flash("You're already registered!")
-        return redirect('/')
+        return redirect('/foraging-foodie')
 
     else:
         print "MAJOR PROBLEM!"
         flash("You have found a website loophole... Please try again later.")
-        return redirect("/")
+        return redirect("/foraging-foodie")
 
-@app.route('/login')
+@app.route('/foraging-foodie/login')
 def show_login_form():
     """ Show login form"""
     return render_template('login.html')
 
 
-@app.route('/verify-login', methods=["POST"])
+@app.route('/foraging-foodie/verify-login', methods=["POST"])
 def verify_login():
     """ Verify user and add to session """
 
@@ -209,42 +209,42 @@ def verify_login():
         if bcrypt.hashpw(login_password.encode('utf-8'), existing_password.encode('utf-8')) == existing_password:
             if 'login' in session:
                 flash("You are already logged in!")
-                return redirect('/')
+                return redirect('/foraging-foodie')
             else:
                 #Add to session
                 session['login'] = existing_user[0].user_id
                 flash("Hi {}, you are now logged in!".format(existing_user[0].first_name))
-                return redirect('/')
+                return redirect('/foraging-foodie')
         else:
             flash("Incorrect password. Please try again.")
-            return redirect('/login')
+            return redirect('foraging-foodie/login')
 
     # Not in DB
     elif len(existing_user) == 0:
         print "Email not in DB"
         flash("That email couldn't be found. Please try again.")
-        return redirect('/login')
+        return redirect('/foraging-foodie/login')
 
     else:
         print "MAJOR PROBLEM!"
         flash("You have found a website loophole... Please try again later.")
-        return redirect("/")
+        return redirect("/foraging-foodie")
 
 
-@app.route('/logout')
+@app.route('/foraging-foodie/logout')
 def logout():
     """Logs user out """
 
     if 'login' in session:
         session.pop('login')
         flash("Goodbye, you are now logged out!")
-        return redirect('/')
+        return redirect('/foraging-foodie')
     else:
         flash("You were never logged in :(")
-        return redirect('/')
+        return redirect('/foraging-foodie')
 
 
-@app.route('/my-profile')
+@app.route('/foraging-foodie/my-profile')
 def shows_user_profile():
     """ Shows info about the user """
 
@@ -258,9 +258,9 @@ def shows_user_profile():
 
     else:
         flash("You aren't logged in. Login here!")
-        return redirect('/login')
+        return redirect('/foraging-foodie/login')
 
-@app.route('/new-address', methods=['POST'])
+@app.route('/foraging-foodie/new-address', methods=['POST'])
 def add_address():
     """ Adds new address for a user """
 
@@ -311,7 +311,7 @@ def get_restaurant_id(yelp_id, rest_name):
 
 
 
-@app.route('/new-visit', methods=['POST'])
+@app.route('/foraging-foodie/new-visit', methods=['POST'])
 def add_visit():
     """ Adds new visit for a user """
 
@@ -333,12 +333,12 @@ def add_visit():
         db.session.commit()
 
         flash("Visit Added!")
-        return redirect('/my-profile')
+        return redirect('/foraging-foodie/my-profile')
 
 
     else:
         flash("You aren't logged in. Login here!")
-        return redirect('/login')
+        return redirect('/foraging-foodie/login')
 
 
 #########################################################################
