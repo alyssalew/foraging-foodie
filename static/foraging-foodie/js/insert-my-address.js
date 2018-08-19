@@ -1,9 +1,19 @@
+"use strict";
+
 function replaceLocation(results) {
-    // console.log(results)
+    // console.log("Replace location");
     // $("input[name='inlineRadioOptions']:checked").val();
 
-   $( "#location" ).val( $( "input:checked" ).val());
+   $( "#location" ).val( $( ".form-check-input:checked" ).val());
 }
 
 
-$( "input" ).on( "click", replaceLocation);
+function enterLocation(results){
+    // console.log ("Clicked into textbox");
+    $( "#location" ).val('');
+    $(".form-check-input").prop('checked', false);
+}
+
+$( ".form-check-input" ).on( "click", replaceLocation);
+
+$( "#location" ).focus(enterLocation);

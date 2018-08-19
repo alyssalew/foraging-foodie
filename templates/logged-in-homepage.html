@@ -22,7 +22,7 @@
         <form action='/foraging-foodie/results' method ="POST">
           <div class="form-group">
             <!-- Need to figure out how to make only of these location options required -->
-            <label for="location"> Location </label>
+            <label for="location" data-toggle="tooltip" data-placement="right" title="Choose a saved locations or enter a new one"> Location </label>
 
             <div class="col-sm-8" id="my-addresses">
               {% for address in user_object.address %}
@@ -36,7 +36,7 @@
             <!-- <div id="here"></div> -->
 
             <div class="col-sm-8">
-              <input type="text" class="form-control" name= "location" id="location" value="" placeholder=" e.g. San Francisco" required>
+              <input type="text" class="form-control" name= "location" id="location" placeholder=" e.g. San Francisco" required>
 
               <small id="locationHelpBlock" class="form-text text-muted">
                 Your location can be an address, neighborhood, city, state or zipcode.
