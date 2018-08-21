@@ -7,16 +7,17 @@ import os
 
 from jinja2 import StrictUndefined
 
+# Bcrypt for Password Hashing
+import bcrypt
+
 import yelp_api  # Import the things needed to use the Yelp API, personal category definitions
+import slack_notifications  # Import the things needed to send Slack messages
 
 # Import the things needed to use the model
 from model import User, Address, Profile, Diet, UserDiet, Favorite, Visit, Rating, Restaurant
 from datetime import date
 
 from model import connect_to_db, db
-
-# Bcrypt for Password Hashing
-import bcrypt
 
 from flask import (Flask, render_template, redirect, request, flash, session, jsonify)
 from flask_debugtoolbar import DebugToolbarExtension
@@ -89,6 +90,8 @@ def search_form_processing():
     ### The REAL request: ###
 
     payload = yelp_api.create_payload(location, radius_mi, user_limit, price_list, open_now, diet_restrict_list, taste_list, temp_list)
+    slack_notifications.user_search(payload)
+
     json_dict = yelp_api.request_restaurants(payload)
 
     print "You just made a request to the Yelp API!"
@@ -169,6 +172,9 @@ def verify_registration():
         user = User(first_name=first_name, last_name=last_name, email=email, password=hashed_pw, user_type_id=user_type_id)
         db.session.add(user)
         db.session.commit()
+
+        slack_notifications.new_user(first_name, last_name, email.encode('utf-8'))
+
         flash("You are now registered!")
         return redirect('/foraging-foodie')
 
@@ -208,11 +214,16 @@ def verify_login():
         # Correct password (hashed)?
         if bcrypt.hashpw(login_password.encode('utf-8'), existing_password.encode('utf-8')) == existing_password:
             if 'login' in session:
+                slack_notifications.user_login(existing_user[0].first_name, existing_user[0].last_name, login_email.encode('utf-8'), "ALREADY")
+
                 flash("You are already logged in!")
                 return redirect('/foraging-foodie')
             else:
                 #Add to session
                 session['login'] = existing_user[0].user_id
+
+                slack_notifications.user_login(existing_user[0].first_name, existing_user[0].last_name, login_email.encode('utf-8'))
+
                 flash("Hi {}, you are now logged in!".format(existing_user[0].first_name))
                 return redirect('/foraging-foodie')
         else:

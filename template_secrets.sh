@@ -5,3 +5,5 @@ export APP_KEY="A_RANDOM_STRING"
 
 export CLIENT_ID="YOUR_YELP_CLIENT_ID"
 export YELP_API_KEY="YOUR_YELP_API_KEY (THE REALLY LONG STRING!)"
+
+export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/xxxxxxxx/xxxxxxx/xxxxxxxxxxxxx"
