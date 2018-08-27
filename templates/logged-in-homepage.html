@@ -27,7 +27,7 @@
             <div class="col-sm-8" id="my-addresses">
               {% for address in user_object.address %}
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio_{{address.address_label|title}}" value='{{address.address}}'>
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio-my-address" value='{{address.address}}'>
                   <label class="form-check-label" for="inlineRadio">{{address.address_label|title}}</label>
                 </div>
               {% endfor %}
