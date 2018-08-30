@@ -11,7 +11,7 @@ Foraging Foodie is powered by Python and Flask. The elegant and responsive web p
 ## Table of Contents
 - [Technology Stack](#tech-stack)
 - [Setup/Installation](#setup-install)
-- [Additional Resources](#resources)
+- [Additional Resources](#additional-resources)
 
 ## <a name="tech-stack"></a>Technology Stack
 **Backend:**
@@ -31,6 +31,7 @@ Foraging Foodie is powered by Python and Flask. The elegant and responsive web p
 
 **APIs:**
 - [Yelp Fusion API]
+- [Slack API]
 
 **Oher:**
 - [Bcrypt] -- For password encryption
@@ -41,6 +42,8 @@ Foraging Foodie is powered by Python and Flask. The elegant and responsive web p
 - Python 2.7
 - [Yelp Developer Account](https://www.yelp.com/developers)
     - [Yelp Fusion API Key](https://www.yelp.com/developers/documentation/v3/authentication)
+- Slack workspace
+    - [Incoming WebHooks App](https://slack.com/apps/A0F7XDUAZ-incoming-webhooks)
 
 ** To host the project remotely you will need AWS EC2 server or equivalent **
 
@@ -67,6 +70,7 @@ In this file put the following info (also in `template_secrets.sh`):
 export APP_KEY="A_RANDOM_STRING"
 export CLIENT_ID="YOUR_YELP_CLIENT_ID"
 export YELP_API_KEY="YOUR_YELP_API_KEY (THE REALLY LONG STRING!)"
+export SLACK_WEBHOOK_URL="https://hooks.slack.com/services/xxxxxxxx/xxxxxxx/xxxxxxxxxxxxx"
 ```
 **6. Create a database:**
 ```
@@ -101,14 +105,16 @@ If you want to use SQLAlchemy to query the database, run it in interactive mode:
 $ python -i model.py
 ```
 You can also query the database using PostgreSQL:
-```SQL
+```
 $ psql foraging-foodie
 foraging-foodie=# SELECT * FROM users;
 ```
 
-## <a name=“resources”></a> Additional Resources
+## <a name=“additional-resources”></a> Additional Resources
 - [Yelp Fusion API - Business Search]
 - [Yelp Fusion API - Categories]
+- [Slack API - Messages]
+
 
 [//]: # (Shoutout to Dillinger.io for README formatting!)
 
@@ -128,6 +134,9 @@ foraging-foodie=# SELECT * FROM users;
 [Yelp Fusion API]: <https://www.yelp.com/developers/documentation/v3>
 [Yelp Fusion API - Business Search]: <https://www.yelp.com/developers/documentation/v3/business_search>
 [Yelp Fusion API - Categories]: <https://www.yelp.com/developers/documentation/v3/all_category_list>
+
+[Slack API]: <https://api.slack.com/>
+[Slack API - Messages]: <https://api.slack.com/docs/messages>
 
 [Bcrypt]: <https://pypi.org/project/bcrypt/>
 [Font Awesome]: <https://fontawesome.com/>
