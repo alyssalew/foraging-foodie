@@ -47,6 +47,8 @@ Foraging Foodie is powered by Python and Flask. The elegant and responsive web p
 
 ** To host the project remotely you will need AWS EC2 server or equivalent **
 
+**[Project Diagrams](https://github.com/alyssalew/foraging-foodie/wiki/Project-Diagrams)** :bar_chart:
+
 ### To run the app locally on your computer:
 **1. Clone the repository:**
 ```
