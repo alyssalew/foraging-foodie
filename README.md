@@ -6,7 +6,7 @@ Foraging Foodie helps users find the perfect restaurants to satisfy their cravin
 
 Foraging Foodie is powered by Python and Flask. The elegant and responsive web pages are built with Javascript and Bootstrap. User profile information is stored in a PostgreSQL database.
 
-![Homepage](https://user-images.githubusercontent.com/4656934/42492567-6b8ca4a4-83ce-11e8-8077-bdc9d3e9076f.gif)
+![Homepage](https://user-images.githubusercontent.com/4656934/123515642-12225d80-d64d-11eb-96bd-1aa66f2a132c.mov)
 
 ## Table of Contents
 - [Technology Stack](#tech-stack)
